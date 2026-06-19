@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="es" class="scroll-smooth">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Estructura Base - Custom Palette</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+            // Extendemos Tailwind con los colores exactos del logo
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        colors: {
+                            logo: {
+                                fucsia: '#e600a0', // Rosa neón del frente
+                                cian: '#00d2ff', // Turquesa/Cian brillante de los bordes
+                                azul: '#2000b0', // Azul eléctrico de las sombras laterales
+                                dark: '#0d0d12', // Negro profundo optimizado para interfaces
+                            },
+                        },
+                    },
+                },
+            };
+        </script>
+    </head>
+    <body class="bg-logo-dark text-slate-300 flex flex-col min-h-screen font-sans">
+        <header class="bg-black/80 backdrop-blur-md border-b border-zinc-800 sticky top-0 z-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between h-16">
+                    <div class="flex-shrink-0 flex items-center">
+                        <div
+                            class="text-xl font-extrabold tracking-wider bg-gradient-to-r from-logo-cian via-logo-fucsia to-logo-cian bg-clip-text text-transparent drop-shadow-[0_2px_8px_rgba(230,0,160,0.5)]"
+                        >
+                            EPA!
+                        </div>
+                    </div>
+
+                    <nav class="hidden md:flex space-x-8 items-center">
+                        <a href="#" class="text-sm font-medium text-slate-400 hover:text-logo-cian transition-colors"
+                            >Inicio</a
+                        >
+
+                        <a href="#" class="text-sm font-medium text-slate-400 hover:text-logo-cian transition-colors"
+                            >E-Commerce</a
+                        >
+
+                        <a
+                            href="#diseno"
+                            class="text-sm font-medium text-slate-400 hover:text-logo-cian transition-colors"
+                            >Diseño</a
+                        >
+
+                        <a
+                            href="#community"
+                            class="text-sm font-medium text-slate-400 hover:text-logo-cian transition-colors"
+                            >Community Management</a
+                        >
+
+                        <a href="#" class="text-sm font-medium text-slate-400 hover:text-logo-cian transition-colors"
+                            >Trabajos</a
+                        >
+                        <a href="#" class="text-sm font-medium text-slate-400 hover:text-logo-cian transition-colors"
+                            >Videos</a
+                        >
+                        <a href="#" class="text-sm font-medium text-slate-400 hover:text-logo-cian transition-colors"
+                            >Alianzas</a
+                        >
+
+                        <div class="relative group py-4">
+                            <button
+                                class="flex items-center gap-1 text-sm font-medium text-slate-400 group-hover:text-logo-fucsia transition-colors focus:outline-none"
+                            >
+                                Soporte
+                                <svg
+                                    class="w-4 h-4 text-slate-500 group-hover:text-logo-fucsia"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M19 9l-7 7-7-7"
+                                    ></path>
+                                </svg>
+                            </button>
+                            <ul
+                                class="absolute left-0 top-full hidden group-hover:block w-48 bg-zinc-950 border border-zinc-800 rounded-md shadow-2xl py-1 z-50"
+                            >
+                                <li>
+                                    <a
+                                        href="#"
+                                        class="block px-4 py-2 text-sm text-slate-400 hover:bg-zinc-900 hover:text-logo-cian"
+                                        >Centro de Ayuda</a
+                                    >
+                                </li>
+                                <li>
+                                    <a
+                                        href="#"
+                                        class="block px-4 py-2 text-sm text-slate-400 hover:bg-zinc-900 hover:text-logo-cian"
+                                        >Ticket de Soporte</a
+                                    >
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                    <div class="md:hidden flex items-center">
+                        <button class="text-slate-400 hover:text-white focus:outline-none">
+                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M4 6h16M4 12h16M4 18h16"
+                                ></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="flex-grow p-8 relative overflow-hidden flex flex-col items-center gap-16">
+           <!-- Luces de fondo sutiles distribuidas -->
+            <div class="absolute w-[600px] h-[600px] bg-logo-fucsia/5 blur-[150px] rounded-full -z-10 top-1/4 left-1/3"></div>
+            <div class="absolute w-[600px] h-[600px] bg-logo-cian/5 blur-[150px] rounded-full -z-10 top-2/3 right-1/3"></div>
+
+            <!-- NUEVA SECCIÓN: INSTAGRAM FEED -->
+            <section id="social-feed" class="max-w-7xl w-full pt-4 pb-8">
+                <div class="bg-zinc-950/80 border border-zinc-800/80 rounded-2xl p-8 shadow-2xl relative overflow-hidden flex flex-col md:flex-row items-center gap-8">
+                    
+                    <!-- Brillo de fondo para la card -->
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-logo-fucsia/10 to-logo-cian/10 blur-[80px] -z-10"></div>
+
+                    <!-- Info y Llamado a la acción -->
+                    <div class="w-full md:w-1/2 flex flex-col items-start text-left space-y-4 z-10">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-logo-fucsia/10 border border-logo-fucsia/20 text-logo-fucsia text-xs font-bold tracking-widest uppercase">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                            </svg>
+                            Nuestro Día a Día
+                        </div>
+                        <h2 class="text-3xl font-extrabold text-white tracking-tight">
+                            Seguinos en <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#f9ce34] via-[#ee2a7b] to-[#6228d7]">Instagram</span>
+                        </h2>
+                        <p class="text-slate-400 text-sm md:text-base max-w-md">
+                            Conocé nuestros últimos proyectos, detrás de escena y las tendencias digitales que aplicamos para potenciar marcas.
+                        </p>
+                        <a href="https://www.instagram.com/TU_USUARIO_AQUI" target="_blank" class="mt-2 inline-flex items-center justify-center px-6 py-3 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-logo-fucsia to-logo-cian hover:from-logo-cian hover:to-logo-fucsia transition-all duration-300 shadow-lg shadow-logo-fucsia/25 hover:shadow-logo-cian/40">
+                            Visitar Perfil @TuAgencia
+                        </a>
+                    </div>
+
+  <!-- Contenedor del Feed Automático / Widget -->
+  <div class="w-full md:w-1/2 flex justify-center lg:justify-end z-10">
+    <div class="w-full max-w-sm bg-zinc-900 border border-zinc-800 rounded-xl aspect-[4/5] flex items-center justify-center p-4 relative overflow-hidden group">
+      
+      <!-- ESTE ES EL LUGAR DONDE PEGARÁS EL WIDGET DE ELFSIGHT/CURATOR -->
+      <div class="text-center">
+        <svg class="w-12 h-12 text-zinc-700 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+        </svg>
+        <p class="text-zinc-500 text-sm">Espacio para Widget de Instagram</p>
+        <p class="text-zinc-600 text-xs mt-1">(Aquí se cargará tu último post/reel)</p>
+      </div>
+      <!-- FIN DEL LUGAR DEL WIDGET -->
+      
+    </div>
+  </div> 
+  
+                    <!-- Contenedor del Embed Manual -->
+                    <div class="w-full md:w-1/2 flex justify-center lg:justify-end z-10">
+                        <!-- El max-w-sm es para limitar el ancho del bloque de Instagram y que no se rompa la grilla -->
+                        <div class="w-full max-w-sm flex justify-center items-center overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900 shadow-xl min-h-[450px]">
+                            
+                            <!-- ========================================== -->
+                            <!-- REEMPLAZA ESTE BLOQUE CON TU EMBED MANUAL -->
+                            <!-- ========================================== -->
+                            <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="https://www.instagram.com/p/DF2q-g3v8hI/" data-instgrm-version="14" style="background:#000; border:0; margin:0; padding:0; width:100%;">
+                                <div style="padding:16px; text-align:center;">
+                                    <p class="text-xs text-zinc-500 animate-pulse">Cargando publicación de Instagram de prueba...</p>
+                                </div>
+                            </blockquote>
+                            <script async src="//www.instagram.com/embed.js"></script>
+                            <!-- ========================================== -->
+                            <!--           FIN DEL BLOQUE DE EMBED          -->
+                            <!-- ========================================== -->
+
+                        </div>
+                    </div>
+
+                </div>
+
+            <section id="diseno" class="max-w-7xl w-full py-12 scroll-mt-20">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-extrabold text-white sm:text-4xl tracking-tight uppercase">
+                        Servicios de
+                        <span class="bg-gradient-to-r from-logo-cian to-logo-fucsia bg-clip-text text-transparent"
+                            >Diseño</span
+                        >
+                    </h2>
+                    <p class="mt-3 text-lg text-slate-400 max-w-2xl mx-auto">
+                        Soluciones visuales y de experiencia de usuario diseñadas para hacer destacar tu marca con una
+                        estética de alto impacto.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div
+                        class="group bg-zinc-950/60 border border-zinc-800/80 p-6 rounded-xl hover:border-logo-cian/50 transition-all duration-300 relative overflow-hidden shadow-xl hover:shadow-logo-cian/5 cursor-pointer"
+                    >
+                        <div
+                            class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-logo-cian to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
+                        ></div>
+                        <span class="text-xs font-semibold text-logo-cian tracking-widest uppercase">Digital</span>
+                        <h3 class="text-xl font-bold text-white mt-2 group-hover:text-logo-cian transition-colors">
+                            Diseño UI/UX
+                        </h3>
+                        <p class="text-sm text-slate-400 mt-2">
+                            Creación de interfaces intuitivas y experiencias digitales optimizadas centradas en el
+                            usuario.
+                        </p>
+                    </div>
+
+                    <div
+                        class="group bg-zinc-950/60 border border-zinc-800/80 p-6 rounded-xl hover:border-logo-fucsia/50 transition-all duration-300 relative overflow-hidden shadow-xl hover:shadow-logo-fucsia/5 cursor-pointer"
+                    >
+                        <div
+                            class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-logo-fucsia to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
+                        ></div>
+                        <span class="text-xs font-semibold text-logo-fucsia tracking-widest uppercase">Visual</span>
+                        <h3 class="text-xl font-bold text-white mt-2 group-hover:text-logo-fucsia transition-colors">
+                            Diseño Gráfico
+                        </h3>
+                        <p class="text-sm text-slate-400 mt-2">
+                            Comunicación visual efectiva a través de piezas gráficas creativas para todo tipo de
+                            formatos.
+                        </p>
+                    </div>
+
+                    <div
+                        class="group bg-zinc-950/60 border border-zinc-800/80 p-6 rounded-xl hover:border-logo-cian/50 transition-all duration-300 relative overflow-hidden shadow-xl hover:shadow-logo-cian/5 cursor-pointer"
+                    >
+                        <div
+                            class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-logo-cian to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
+                        ></div>
+                        <span class="text-xs font-semibold text-logo-cian tracking-widest uppercase">Estática</span>
+                        <h3 class="text-xl font-bold text-white mt-2 group-hover:text-logo-cian transition-colors">
+                            Diseño de Imagen
+                        </h3>
+                        <p class="text-sm text-slate-400 mt-2">
+                            Desarrollo y curaduría de la estética visual global adaptada a las necesidades de tu
+                            entorno.
+                        </p>
+                    </div>
+
+                    <div
+                        class="group bg-zinc-950/60 border border-zinc-800/80 p-6 rounded-xl hover:border-logo-fucsia/50 transition-all duration-300 relative overflow-hidden shadow-xl hover:shadow-logo-fucsia/5 cursor-pointer"
+                    >
+                        <div
+                            class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-logo-fucsia to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
+                        ></div>
+                        <span class="text-xs font-semibold text-logo-fucsia tracking-widest uppercase"
+                            >Editorial & Marca</span
+                        >
+                        <h3 class="text-xl font-bold text-white mt-2 group-hover:text-logo-fucsia transition-colors">
+                            Diseño de Identidad Corporativa
+                        </h3>
+                        <p class="text-sm text-slate-400 mt-2">
+                            Construcción integral de identidad visual y diseño de Brochures Corporativos profesionales.
+                        </p>
+                    </div>
+
+                    <div
+                        class="group bg-zinc-950/60 border border-zinc-800/80 p-6 rounded-xl hover:border-logo-cian/50 transition-all duration-300 relative overflow-hidden shadow-xl hover:shadow-logo-cian/5 cursor-pointer"
+                    >
+                        <div
+                            class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-logo-cian to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
+                        ></div>
+                        <span class="text-xs font-semibold text-logo-cian tracking-widest uppercase">Evolución</span>
+                        <h3 class="text-xl font-bold text-white mt-2 group-hover:text-logo-cian transition-colors">
+                            Rediseño y Optimización de Marcas Existentes
+                        </h3>
+                        <p class="text-sm text-slate-400 mt-2">
+                            Modernización y evolución de logotipos e identidades visuales manteniendo su esencia
+                            original.
+                        </p>
+                    </div>
+
+                    <div
+                        class="group bg-zinc-950/60 border border-zinc-800/80 p-6 rounded-xl hover:border-logo-fucsia/50 transition-all duration-300 relative overflow-hidden shadow-xl hover:shadow-logo-fucsia/5 cursor-pointer"
+                    >
+                        <div
+                            class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-logo-fucsia to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
+                        ></div>
+                        <span class="text-xs font-semibold text-logo-fucsia tracking-widest uppercase">Producto</span>
+                        <h3 class="text-xl font-bold text-white mt-2 group-hover:text-logo-fucsia transition-colors">
+                            Diseño para Packaging
+                        </h3>
+                        <p class="text-sm text-slate-400 mt-2">
+                            Estructuración y diseño exterior de empaques comerciales atractivos y listos para
+                            producción.
+                        </p>
+                    </div>
+
+                    <div
+                        class="group bg-zinc-950/60 border border-zinc-800/80 p-6 rounded-xl hover:border-logo-cian/50 transition-all duration-300 relative overflow-hidden shadow-xl hover:shadow-logo-cian/5 cursor-pointer"
+                    >
+                        <div
+                            class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-logo-cian to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
+                        ></div>
+                        <span class="text-xs font-semibold text-logo-cian tracking-widest uppercase">Estrategia</span>
+                        <h3 class="text-xl font-bold text-white mt-2 group-hover:text-logo-cian transition-colors">
+                            Consultoría en Branding Personal
+                        </h3>
+                        <p class="text-sm text-slate-400 mt-2">
+                            Asesoramiento estratégico para posicionar y potenciar tu nombre como una marca de valor.
+                        </p>
+                    </div>
+
+                    <div
+                        class="group bg-zinc-950/60 border border-zinc-800/80 p-6 rounded-xl hover:border-logo-fucsia/50 transition-all duration-300 relative overflow-hidden shadow-xl hover:shadow-logo-fucsia/5 cursor-pointer"
+                    >
+                        <div
+                            class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-logo-fucsia to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
+                        ></div>
+                        <span class="text-xs font-semibold text-logo-fucsia tracking-widest uppercase">Multimedia</span>
+                        <h3 class="text-xl font-bold text-white mt-2 group-hover:text-logo-fucsia transition-colors">
+                            Animación y Motion Graphics
+                        </h3>
+                        <p class="text-sm text-slate-400 mt-2">
+                            Creación de gráficos en movimiento dinámicos, videos explicativos y transiciones animadas.
+                        </p>
+                    </div>
+
+                    <div
+                        class="group bg-zinc-950/60 border border-zinc-800/80 p-6 rounded-xl hover:border-logo-cian/50 transition-all duration-300 relative overflow-hidden shadow-xl hover:shadow-logo-cian/5 cursor-pointer"
+                    >
+                        <div
+                            class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-logo-cian to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
+                        ></div>
+                        <span class="text-xs font-semibold text-logo-cian tracking-widest uppercase">Exhibición</span>
+                        <h3 class="text-xl font-bold text-white mt-2 group-hover:text-logo-cian transition-colors">
+                            Portafolio Artístico
+                        </h3>
+                        <p class="text-sm text-slate-400 mt-2">
+                            Compilación y diseño curado para la exposición profesional de obras, proyectos y piezas de
+                            arte.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="community" class="max-w-7xl w-full py-12 border-t border-zinc-900 scroll-mt-20">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-extrabold text-white sm:text-4xl tracking-tight uppercase">
+                        Community
+                        <span class="bg-gradient-to-r from-logo-fucsia to-logo-cian bg-clip-text text-transparent"
+                            >Management</span
+                        >
+                    </h2>
+                    <p class="mt-3 text-lg text-slate-400 max-w-2xl mx-auto">
+                        Estrategia, crecimiento orgánico y gestión profesional de comunidades digitales para conectar tu
+                        negocio con el público ideal.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div
+                        class="group bg-zinc-950/60 border border-zinc-800/80 p-6 rounded-xl hover:border-logo-fucsia/50 transition-all duration-300 relative overflow-hidden shadow-xl hover:shadow-logo-fucsia/5 cursor-pointer"
+                    >
+                        <div
+                            class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-logo-fucsia to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
+                        ></div>
+                        <span class="text-xs font-semibold text-logo-fucsia tracking-widest uppercase"
+                            >Planificación</span
+                        >
+                        <h3 class="text-xl font-bold text-white mt-2 group-hover:text-logo-fucsia transition-colors">
+                            Estrategia de Marca
+                        </h3>
+                        <p class="text-sm text-slate-400 mt-2">
+                            Definición de pilares comerciales, tono de voz y posicionamiento estratégico en el mercado
+                            digital.
+                        </p>
+                    </div>
+
+                    <div
+                        class="group bg-zinc-950/60 border border-zinc-800/80 p-6 rounded-xl hover:border-logo-cian/50 transition-all duration-300 relative overflow-hidden shadow-xl hover:shadow-logo-cian/5 cursor-pointer"
+                    >
+                        <div
+                            class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-logo-cian to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
+                        ></div>
+                        <span class="text-xs font-semibold text-logo-cian tracking-widest uppercase">Gestión</span>
+                        <h3 class="text-xl font-bold text-white mt-2 group-hover:text-logo-cian transition-colors">
+                            Manejo de RRSS
+                        </h3>
+                        <p class="text-sm text-slate-400 mt-2">
+                            Administración activa, moderación de comunidades y publicación consistente en múltiples
+                            plataformas.
+                        </p>
+                    </div>
+
+                    <div
+                        class="group bg-zinc-950/60 border border-zinc-800/80 p-6 rounded-xl hover:border-logo-fucsia/50 transition-all duration-300 relative overflow-hidden shadow-xl hover:shadow-logo-fucsia/5 cursor-pointer"
+                    >
+                        <div
+                            class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-logo-fucsia to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
+                        ></div>
+                        <span class="text-xs font-semibold text-logo-fucsia tracking-widest uppercase">Producción</span>
+                        <h3 class="text-xl font-bold text-white mt-2 group-hover:text-logo-fucsia transition-colors">
+                            Creación de Contenido para RRSS
+                        </h3>
+                        <p class="text-sm text-slate-400 mt-2">
+                            Diseño y desarrollo de piezas atractivas (reels, carruseles, historias) orientadas a generar
+                            engagement.
+                        </p>
+                    </div>
+
+                    <div
+                        class="group bg-zinc-950/60 border border-zinc-800/80 p-6 rounded-xl hover:border-logo-cian/50 transition-all duration-300 relative overflow-hidden shadow-xl hover:shadow-logo-cian/5 cursor-pointer"
+                    >
+                        <div
+                            class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-logo-cian to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
+                        ></div>
+                        <span class="text-xs font-semibold text-logo-cian tracking-widest uppercase">Audiovisual</span>
+                        <h3 class="text-xl font-bold text-white mt-2 group-hover:text-logo-cian transition-colors">
+                            Desarrollo de Video Marketing
+                        </h3>
+                        <p class="text-sm text-slate-400 mt-2">
+                            Estrategias de contenido en video de formato corto y largo para potenciar conversiones y
+                            alcance.
+                        </p>
+                    </div>
+
+                    <div
+                        class="group bg-zinc-950/60 border border-zinc-800/80 p-6 rounded-xl hover:border-logo-fucsia/50 transition-all duration-300 relative overflow-hidden shadow-xl hover:shadow-logo-fucsia/5 cursor-pointer"
+                    >
+                        <div
+                            class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-logo-fucsia to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
+                        ></div>
+                        <span class="text-xs font-semibold text-logo-fucsia tracking-widest uppercase">Negocios</span>
+                        <h3 class="text-xl font-bold text-white mt-2 group-hover:text-logo-fucsia transition-colors">
+                            Consultoría en Transformación Digital
+                        </h3>
+                        <p class="text-sm text-slate-400 mt-2">
+                            Migración y adaptación de procesos tradicionales hacia herramientas digitales avanzadas.
+                        </p>
+                    </div>
+
+                    <div
+                        class="group bg-zinc-950/60 border border-zinc-800/80 p-6 rounded-xl hover:border-logo-cian/50 transition-all duration-300 relative overflow-hidden shadow-xl hover:shadow-logo-cian/5 cursor-pointer"
+                    >
+                        <div
+                            class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-logo-cian to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
+                        ></div>
+                        <span class="text-xs font-semibold text-logo-cian tracking-widest uppercase">Redacción</span>
+                        <h3 class="text-xl font-bold text-white mt-2 group-hover:text-logo-cian transition-colors">
+                            Copywriting y Redacción de Contenido
+                        </h3>
+                        <p class="text-sm text-slate-400 mt-2">
+                            Escritura persuasiva para copies, artículos y guiones enfocados en cautivar y vender.
+                        </p>
+                    </div>
+
+                    <div
+                        class="group bg-zinc-950/60 border border-zinc-800/80 p-6 rounded-xl hover:border-logo-fucsia/50 transition-all duration-300 relative overflow-hidden shadow-xl hover:shadow-logo-fucsia/5 cursor-pointer"
+                    >
+                        <div
+                            class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-logo-fucsia to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
+                        ></div>
+                        <span class="text-xs font-semibold text-logo-fucsia tracking-widest uppercase"
+                            >Optimización</span
+                        >
+                        <h3 class="text-xl font-bold text-white mt-2 group-hover:text-logo-fucsia transition-colors">
+                            SEO (Optimización para Motores de Búsqueda)
+                        </h3>
+                        <p class="text-sm text-slate-400 mt-2">
+                            Mejora de visibilidad orgánica en Google para atraer tráfico calificado y clientes
+                            potenciales.
+                        </p>
+                    </div>
+
+                    <div
+                        class="group bg-zinc-950/60 border border-zinc-800/80 p-6 rounded-xl hover:border-logo-cian/50 transition-all duration-300 relative overflow-hidden shadow-xl hover:shadow-logo-cian/5 cursor-pointer"
+                    >
+                        <div
+                            class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-logo-cian to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
+                        ></div>
+                        <span class="text-xs font-semibold text-logo-cian tracking-widest uppercase">E-Commerce</span>
+                        <h3 class="text-xl font-bold text-white mt-2 group-hover:text-logo-cian transition-colors">
+                            Creación de Tiendas en Línea
+                        </h3>
+                        <p class="text-sm text-slate-400 mt-2">
+                            Montaje integral y configuración de plataformas de comercio electrónico listas para
+                            facturar.
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="bg-black text-slate-400 border-t border-zinc-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-left">
+                    <div class="flex flex-col space-y-4">
+                        <h3
+                            class="text-white text-sm font-semibold tracking-wider uppercase border-b border-zinc-800 pb-2"
+                        >
+                            Quiénes Somos
+                        </h3>
+                        <p class="text-sm text-slate-400 leading-relaxed max-w-sm">
+                            Somos un equipo comprometido con ofrecer soluciones informáticas y tecnológicas a medida.
+                            Nos specialize en infraestructura, desarrollo y diseño robusto para potenciar tu presencia y
+                            eficiencia digital.
+                        </p>
+                    </div>
+
+                    <div class="flex flex-col space-y-4 md:pl-8">
+                        <h3
+                            class="text-white text-sm font-semibold tracking-wider uppercase border-b border-zinc-800 pb-2"
+                        >
+                            Contacto
+                        </h3>
+                        <ul class="space-y-3 text-sm">
+                            <li
+                                class="flex items-center gap-3 hover:text-logo-cian transition-colors group cursor-pointer"
+                            >
+                                <svg
+                                    class="w-5 h-5 text-logo-fucsia flex-shrink-0 group-hover:text-logo-cian transition-colors"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M3 8l7.89 5.26a2 2 0 002.22 0L22 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                                    ></path>
+                                </svg>
+                                <span>soporte@tuempresa.com</span>
+                            </li>
+                            <li
+                                class="flex items-center gap-3 hover:text-logo-cian transition-colors group cursor-pointer"
+                            >
+                                <svg
+                                    class="w-5 h-5 text-logo-fucsia flex-shrink-0 group-hover:text-logo-cian transition-colors"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                                    ></path>
+                                </svg>
+                                <span>+54 (11) 1234-5678</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="flex flex-col space-y-4 md:pl-8">
+                        <h3
+                            class="text-white text-sm font-semibold tracking-wider uppercase border-b border-zinc-800 pb-2"
+                        >
+                            Redes Sociales
+                        </h3>
+                        <p class="text-sm text-slate-400">Síguenos en nuestras comunidades:</p>
+                        <div class="flex space-x-4">
+                            <a
+                                href="#"
+                                class="text-slate-400 hover:text-white transition-colors p-2 bg-zinc-900 border border-zinc-800 rounded hover:bg-logo-fucsia hover:border-logo-fucsia"
+                                aria-label="LinkedIn"
+                            >
+                                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path
+                                        d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"
+                                    />
+                                </svg>
+                            </a>
+                            <a
+                                href="#"
+                                class="text-slate-400 hover:text-white transition-colors p-2 bg-zinc-900 border border-zinc-800 rounded hover:bg-logo-cian hover:border-logo-cian"
+                                aria-label="GitHub"
+                            >
+                                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path
+                                        d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+                                    />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-12 border-t border-zinc-800 pt-8 text-center text-xs text-slate-600">
+                    &copy; 2026 EPA!. Todos los derechos reservados.
+                </div>
+            </div>
+        </footer>
+    </body>
+</html>
