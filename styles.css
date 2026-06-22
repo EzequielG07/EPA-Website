@@ -1,0 +1,39 @@
+/* ==========================================================================
+   OPTIMIZACIÓN RESPONSIVE PARA EMBED DE INSTAGRAM
+   ========================================================================== */
+
+/* Asegura que el iframe generado por Instagram nunca supere el ancho del dispositivo */
+.instagram-embed-wrapper iframe {
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
+    display: block;
+    margin: 0 auto !important;
+    border-radius: 12px !important; /* Acompaña el redondeado del contenedor */
+}
+
+/* Ajustes específicos para Tablets (Pantallas Medianas) */
+@media (min-width: 768px) and (max-width: 1023px) {
+    #social-feed > div {
+        flex-direction: column !important;
+        padding: 2.5rem !important;
+    }
+
+    .instagram-embed-wrapper {
+        max-width: 400px !important; /* Permite un embed un poco más grande en tablets */
+        width: 100%;
+    }
+}
+
+/* Ajustes específicos para Celulares Chicos (Pantallas < 360px) */
+@media (max-width: 359px) {
+    #social-feed > div {
+        padding: 1.25rem !important; /* Reduce el padding interno para dar más espacio al contenido */
+        gap: 1.5rem !important;
+    }
+
+    .instagram-embed-wrapper {
+        max-width: 100% !important;
+        min-height: 400px !important; /* Reduce la altura mínima para evitar espacios en blanco vacíos */
+    }
+}
