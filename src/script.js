@@ -142,25 +142,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Función que fuerza a Google Translate a seleccionar el idioma correcto
 function cambiarIdioma(codigo) {
-    const selectorGoogle = document.querySelector('.goog-te-combo');
+    // Intentamos buscar el selector nativo de Google inmediatamente
+    let selectorGoogle = document.querySelector('.goog-te-combo');
 
     if (selectorGoogle) {
         selectorGoogle.value = codigo;
         selectorGoogle.dispatchEvent(new Event('change'));
     } else {
-        // Si Google aún no cargó el select, esperamos 200ms y reintentamos
-        setTimeout(() => {
-            const reintentoSelector = document.querySelector('.goog-te-combo');
-            if (reintentoSelector) {
-                reintentoSelector.value = codigo;
-                reintentoSelector.dispatchEvent(new Event('change'));
-            } else {
-                console.warn('Google Translate aún no está listo en la página.');
+        // Si aún no se creó, creamos un intervalo que revise cada 100ms
+        let intentos = 0;
+        const maxIntentos = 30; // Máximo 3 segundos de espera
+
+        const verificarSelector = setInterval(() => {
+            selectorGoogle = document.querySelector('.goog-te-combo');
+            intentos++;
+
+            if (selectorGoogle) {
+                selectorGoogle.value = codigo;
+                selectorGoogle.dispatchEvent(new Event('change'));
+                clearInterval(verificarSelector);
+            } else if (intentos >= maxIntentos) {
+                console.warn('No se pudo cargar el traductor de Google.');
+                clearInterval(verificarSelector);
             }
-        }, 200);
+        }, 100);
     }
 
-    // Ocultar el menú desplegable de todas formas
+    // Ocultar el menú desplegable de idiomas
     const menu = document.getElementById('menu-idiomas');
     if (menu) menu.classList.add('hidden');
 }
