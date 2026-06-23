@@ -120,3 +120,47 @@ if (menuBtn && mobileMenu && menuIcon) {
         });
     });
 }
+
+//TODO LOGICA BOTON IDIOMAS
+document.addEventListener('DOMContentLoaded', () => {
+    const btnIdioma = document.getElementById('btn-idioma');
+    const menuIdiomas = document.getElementById('menu-idiomas');
+
+    // Abrir/Cerrar menú flotante
+    btnIdioma.addEventListener('click', (e) => {
+        e.preventDefault();
+        menuIdiomas.classList.toggle('hidden');
+    });
+
+    // Cerrar si hace clic afuera del menú
+    document.addEventListener('click', (e) => {
+        if (!btnIdioma.contains(e.target) && !menuIdiomas.contains(e.target)) {
+            menuIdiomas.classList.add('hidden');
+        }
+    });
+});
+
+// Función que fuerza a Google Translate a seleccionar el idioma correcto
+function cambiarIdioma(codigo) {
+    const selectorGoogle = document.querySelector('.goog-te-combo');
+
+    if (selectorGoogle) {
+        selectorGoogle.value = codigo;
+        selectorGoogle.dispatchEvent(new Event('change'));
+    } else {
+        // Si Google aún no cargó el select, esperamos 200ms y reintentamos
+        setTimeout(() => {
+            const reintentoSelector = document.querySelector('.goog-te-combo');
+            if (reintentoSelector) {
+                reintentoSelector.value = codigo;
+                reintentoSelector.dispatchEvent(new Event('change'));
+            } else {
+                console.warn('Google Translate aún no está listo en la página.');
+            }
+        }, 200);
+    }
+
+    // Ocultar el menú desplegable de todas formas
+    const menu = document.getElementById('menu-idiomas');
+    if (menu) menu.classList.add('hidden');
+}

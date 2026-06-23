@@ -1,3 +1,5 @@
+@import 'tailwindcss';
+
 /* ==========================================================================
    OPTIMIZACIÓN RESPONSIVE PARA EMBED DE INSTAGRAM
    ========================================================================== */
@@ -36,4 +38,23 @@
         max-width: 100% !important;
         min-height: 400px !important; /* Reduce la altura mínima para evitar espacios en blanco vacíos */
     }
+}
+
+/*TODO ESTILO BOTON IDIOMA
+/* Ocultar el banner superior que genera Google Translate */
+.skiptranslate,
+.goog-te-banner-frame {
+    display: none !important;
+}
+body {
+    top: 0 !important;
+}
+/* Ocultar el cartel flotante nativo de Google */
+#goog-gt-tt,
+.goog-te-balloon-frame {
+    display: none !important;
+}
+.goog-text-highlight {
+    background-color: transparent !important;
+    box-shadow: none !important;
 }
