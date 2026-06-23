@@ -126,49 +126,38 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnIdioma = document.getElementById('btn-idioma');
     const menuIdiomas = document.getElementById('menu-idiomas');
 
-    // Abrir/Cerrar menú flotante
-    btnIdioma.addEventListener('click', (e) => {
-        e.preventDefault();
-        menuIdiomas.classList.toggle('hidden');
-    });
+    if (btnIdioma && menuIdiomas) {
+        // Abrir/Cerrar menú flotante
+        btnIdioma.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            menuIdiomas.classList.toggle('hidden');
+        });
 
-    // Cerrar si hace clic afuera del menú
-    document.addEventListener('click', (e) => {
-        if (!btnIdioma.contains(e.target) && !menuIdiomas.contains(e.target)) {
-            menuIdiomas.classList.add('hidden');
-        }
-    });
+        // Cerrar si hace clic afuera
+        document.addEventListener('click', (e) => {
+            if (!btnIdioma.contains(e.target) && !menuIdiomas.contains(e.target)) {
+                menuIdiomas.classList.add('hidden');
+            }
+        });
+    }
 });
 
-// Función que fuerza a Google Translate a seleccionar el idioma correcto
+// Función infalible mediante cookies nativas de Google
 function cambiarIdioma(codigo) {
-    // Intentamos buscar el selector nativo de Google inmediatamente
-    let selectorGoogle = document.querySelector('.goog-te-combo');
+    // Definimos el dominio actual para que la cookie aplique a todo el sitio
+    const dominio = window.location.hostname === 'localhost' ? '' : ';domain=.github.io';
 
-    if (selectorGoogle) {
-        selectorGoogle.value = codigo;
-        selectorGoogle.dispatchEvent(new Event('change'));
+    if (codigo === 'es') {
+        // Para volver al español, borramos la cookie de traducción
+        document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/' + dominio;
+        document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
     } else {
-        // Si aún no se creó, creamos un intervalo que revise cada 100ms
-        let intentos = 0;
-        const maxIntentos = 30; // Máximo 3 segundos de espera
-
-        const verificarSelector = setInterval(() => {
-            selectorGoogle = document.querySelector('.goog-te-combo');
-            intentos++;
-
-            if (selectorGoogle) {
-                selectorGoogle.value = codigo;
-                selectorGoogle.dispatchEvent(new Event('change'));
-                clearInterval(verificarSelector);
-            } else if (intentos >= maxIntentos) {
-                console.warn('No se pudo cargar el traductor de Google.');
-                clearInterval(verificarSelector);
-            }
-        }, 100);
+        // Para otros idiomas, seteamos la ruta de traducción de Google (De Español 'es' a destino)
+        document.cookie = 'googtrans=/es/' + codigo + '; path=/' + dominio;
+        document.cookie = 'googtrans=/es/' + codigo + '; path=/';
     }
 
-    // Ocultar el menú desplegable de idiomas
-    const menu = document.getElementById('menu-idiomas');
-    if (menu) menu.classList.add('hidden');
+    // Recargamos la página para que Google lea la cookie y traduzca al vuelo
+    location.reload();
 }
