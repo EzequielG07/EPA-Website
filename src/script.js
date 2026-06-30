@@ -295,75 +295,168 @@ function initFormulario() {
     });
 }
 
-// --- LÓGICA DEL NAVBAR RESPONSIVE ---
-const menuBtn = document.getElementById('menu-btn');
-const mobileMenu = document.getElementById('mobile-menu');
-const menuIcon = document.getElementById('menu-icon');
-const mobileLinks = document.querySelectorAll('.mobile-link');
-
-if (menuBtn && mobileMenu && menuIcon) {
-    // Toggle para abrir y cerrar el menú
-    menuBtn.addEventListener('click', () => {
-        const isHidden = mobileMenu.classList.toggle('hidden');
-
-        // Cambia el icono de hamburguesa a una equis (X) dinámicamente
-        if (isHidden) {
-            menuIcon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16'); // Hamburguesa
-            menuIcon.innerHTML =
-                '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>';
-        } else {
-            menuIcon.innerHTML =
-                '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>'; // Cruz
-        }
-    });
-
-    // Cerrar el menú automáticamente al hacer clic en cualquier link del menú móvil
-    mobileLinks.forEach((link) => {
-        link.addEventListener('click', () => {
-            mobileMenu.classList.add('hidden');
-            menuIcon.innerHTML =
-                '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>';
-        });
-    });
-}
-
-//TODO LOGICA BOTON IDIOMAS
 document.addEventListener('DOMContentLoaded', () => {
-    const btnIdioma = document.getElementById('btn-idioma');
-    const menuIdiomas = document.getElementById('menu-idiomas');
+    // --- ELEMENTOS DEL NAVBAR RESPONSIVE ---
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuIcon = document.getElementById('menu-icon');
+    const mobileLinks = document.querySelectorAll('.mobile-link');
 
-    if (btnIdioma && menuIdiomas) {
-        // Abrir/Cerrar menú flotante
-        btnIdioma.addEventListener('click', (e) => {
+    // --- ELEMENTOS DEL BOTÓN IDIOMAS ---
+    const btnIdiomaDesktop = document.getElementById('btn-idioma-desktop');
+    const menuIdiomasDesktop = document.getElementById('menu-idiomas-desktop');
+    const btnIdiomaMobile = document.getElementById('btn-idioma-mobile');
+    const menuIdiomasMobile = document.getElementById('menu-idiomas-mobile');
+    const flechaIdiomaMobile = document.getElementById('flecha-idioma-mobile');
+
+    // Lógica Apertura/Cierre Menú Hamburguesa
+    if (menuBtn && mobileMenu && menuIcon) {
+        menuBtn.addEventListener('click', () => {
+            const isHidden = mobileMenu.classList.toggle('hidden');
+
+            // Si cerramos la hamburguesa, colapsamos el submenú de idiomas móvil por las dudas
+            if (isHidden && menuIdiomasMobile && flechaIdiomaMobile) {
+                menuIdiomasMobile.classList.add('hidden');
+                flechaIdiomaMobile.classList.remove('rotate-180');
+            }
+
+            // Cambia el icono de hamburguesa a una equis (X) dinámicamente
+            if (isHidden) {
+                menuIcon.innerHTML =
+                    '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>';
+            } else {
+                menuIcon.innerHTML =
+                    '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>';
+            }
+        });
+
+        // Cerrar menú móvil al clickear un enlace común
+        mobileLinks.forEach((link) => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                menuIcon.innerHTML =
+                    '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>';
+            });
+        });
+    }
+
+    // Lógica Interactiva Idioma ESCRITORIO (Desktop)
+    if (btnIdiomaDesktop && menuIdiomasDesktop) {
+        btnIdiomaDesktop.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
-            menuIdiomas.classList.toggle('hidden');
+            menuIdiomasDesktop.classList.toggle('hidden');
         });
+    }
 
-        // Cerrar si hace clic afuera
-        document.addEventListener('click', (e) => {
-            if (!btnIdioma.contains(e.target) && !menuIdiomas.contains(e.target)) {
-                menuIdiomas.classList.add('hidden');
+    // Lógica Interactiva Idioma CELULAR (Mobile)
+    if (btnIdiomaMobile && menuIdiomasMobile && flechaIdiomaMobile) {
+        btnIdiomaMobile.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const isHidden = menuIdiomasMobile.classList.toggle('hidden');
+
+            // Si no está oculto, significa que está abierto -> rotamos la flecha
+            if (!isHidden) {
+                flechaIdiomaMobile.classList.add('rotate-180');
+            } else {
+                flechaIdiomaMobile.classList.remove('rotate-180');
             }
         });
     }
+
+    // Cerrar menús flotantes si se hace clic en el documento vacío
+    document.addEventListener('click', (e) => {
+        if (menuIdiomasDesktop && !btnIdiomaDesktop.contains(e.target) && !menuIdiomasDesktop.contains(e.target)) {
+            menuIdiomasDesktop.classList.add('hidden');
+        }
+    });
 });
 
-// Función infalible mediante cookies nativas de Google
+// --- FUNCIÓN DE COOKIES GOOGLE TRANSLATE (Mantenida intacta) ---
 function cambiarIdioma(codigo) {
-    // Definimos el dominio actual para que la cookie aplique a todo el sitio
     const dominio = window.location.hostname === 'localhost' ? '' : ';domain=.github.io';
 
     if (codigo === 'es') {
-        // Para volver al español, borramos la cookie de traducción
         document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/' + dominio;
         document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
     } else {
-        // Para otros idiomas, seteamos la ruta de traducción de Google (De Español 'es' a destino)
         document.cookie = 'googtrans=/es/' + codigo + '; path=/' + dominio;
         document.cookie = 'googtrans=/es/' + codigo + '; path=/';
     }
 
-    // Recargamos la página para que Google lea la cookie y traduzca al vuelo
     location.reload();
 }
+
+// // --- LÓGICA DEL NAVBAR RESPONSIVE ---
+// const menuBtn = document.getElementById('menu-btn');
+// const mobileMenu = document.getElementById('mobile-menu');
+// const menuIcon = document.getElementById('menu-icon');
+// const mobileLinks = document.querySelectorAll('.mobile-link');
+
+// if (menuBtn && mobileMenu && menuIcon) {
+//     // Toggle para abrir y cerrar el menú
+//     menuBtn.addEventListener('click', () => {
+//         const isHidden = mobileMenu.classList.toggle('hidden');
+
+//         // Cambia el icono de hamburguesa a una equis (X) dinámicamente
+//         if (isHidden) {
+//             menuIcon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16'); // Hamburguesa
+//             menuIcon.innerHTML =
+//                 '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>';
+//         } else {
+//             menuIcon.innerHTML =
+//                 '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>'; // Cruz
+//         }
+//     });
+
+//     // Cerrar el menú automáticamente al hacer clic en cualquier link del menú móvil
+//     mobileLinks.forEach((link) => {
+//         link.addEventListener('click', () => {
+//             mobileMenu.classList.add('hidden');
+//             menuIcon.innerHTML =
+//                 '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>';
+//         });
+//     });
+// }
+
+// //TODO LOGICA BOTON IDIOMAS
+// document.addEventListener('DOMContentLoaded', () => {
+//     const btnIdioma = document.getElementById('btn-idioma');
+//     const menuIdiomas = document.getElementById('menu-idiomas');
+
+//     if (btnIdioma && menuIdiomas) {
+//         // Abrir/Cerrar menú flotante
+//         btnIdioma.addEventListener('click', (e) => {
+//             e.preventDefault();
+//             e.stopPropagation();
+//             menuIdiomas.classList.toggle('hidden');
+//         });
+
+//         // Cerrar si hace clic afuera
+//         document.addEventListener('click', (e) => {
+//             if (!btnIdioma.contains(e.target) && !menuIdiomas.contains(e.target)) {
+//                 menuIdiomas.classList.add('hidden');
+//             }
+//         });
+//     }
+// });
+
+// // Función infalible mediante cookies nativas de Google
+// function cambiarIdioma(codigo) {
+//     // Definimos el dominio actual para que la cookie aplique a todo el sitio
+//     const dominio = window.location.hostname === 'localhost' ? '' : ';domain=.github.io';
+
+//     if (codigo === 'es') {
+//         // Para volver al español, borramos la cookie de traducción
+//         document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/' + dominio;
+//         document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
+//     } else {
+//         // Para otros idiomas, seteamos la ruta de traducción de Google (De Español 'es' a destino)
+//         document.cookie = 'googtrans=/es/' + codigo + '; path=/' + dominio;
+//         document.cookie = 'googtrans=/es/' + codigo + '; path=/';
+//     }
+
+//     // Recargamos la página para que Google lea la cookie y traduzca al vuelo
+//     location.reload();
+// }
