@@ -293,14 +293,11 @@
                         loop
                         muted
                         playsinline
+                        poster="assets/captura_encabezado.webp"
                         class="absolute inset-0 w-full h-full object-cover pointer-events-none z-0"
                     >
                         <source src="assets/video/video_encabezado_web_optimizado.mp4" type="video/mp4" />
                     </video>
-
-                    <!-- <div
-                        class="absolute inset-0 bg-gradient-to-r from-zinc-950 via-zinc-950/40 to-zinc-950 z-0 pointer-events-none"
-                    ></div> -->
 
                     <div
                         class="w-full lg:w-1/2 flex flex-col items-center lg:items-start text-center lg:text-left space-y-4 z-10"
@@ -342,10 +339,43 @@
                         </a>
                     </div>
 
+                    <!-- Contenedor del Embed -->
                     <div class="w-full lg:w-1/2 flex justify-center z-10 overflow-hidden post-instagram-container">
                         <div
-                            class="w-full max-w-[300px] xs:max-w-[340px] sm:max-w-sm flex justify-center items-center overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900 shadow-xl min-h-[450px] instagram-embed-wrapper"
+                            class="w-full max-w-[300px] xs:max-w-[340px] sm:max-w-sm flex justify-center items-center overflow-hidden instagram-embed-wrapper relative"
                         >
+                            <!-- TARJETA DE PRECARGA (Se desvanece por JS cuando el Reel está listo) -->
+                            <div
+                                id="instagram-loader"
+                                class="absolute inset-0 bg-zinc-900/90 border border-zinc-800 rounded-xl flex flex-col items-center justify-center space-y-4 z-30 transition-opacity duration-1000 ease-in-out"
+                            >
+                                <!-- Animación de Código: El gradiente de Instagram latiendo sutilmente -->
+                                <div
+                                    class="relative w-16 h-16 rounded-2xl bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] p-[3px] animate-pulse shadow-lg shadow-black/50"
+                                >
+                                    <div
+                                        class="w-full h-full bg-zinc-900 rounded-[13px] flex items-center justify-center"
+                                    >
+                                        <!-- Icono de cámara minimalista en SVG -->
+                                        <svg
+                                            class="w-8 h-8 text-white/90"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <span class="text-xs font-bold uppercase tracking-widest text-zinc-400 animate-pulse"
+                                    >Cargando publicación...</span
+                                >
+                            </div>
+
+                            <!-- BLOQUE REAL DE INSTAGRAM -->
                             <blockquote
                                 class="instagram-media"
                                 data-instgrm-captioned
@@ -362,18 +392,36 @@
             <!-- SECCIÓN: SOLICITAR PRESUPUESTO             -->
             <!-- ========================================== -->
             <section id="presupuesto" class="max-w-[90rem] w-full px-4 sm:px-6 lg:px-8 py-16 mx-auto scroll-mt-24">
-                <!-- Cabecera de la sección -->
-                <div class="border-2 border-red-500 mb-12 text-center md:text-left">
-                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight uppercase">
-                        Cotizá tu
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-logo-fucsia to-logo-cian"
-                            >Proyecto</span
+                <div
+                    class="text-center md:text-left relative mb-12 overflow-hidden rounded-xl bg-slate-900 px-6 pb-6 pt-24 text-left flex flex-col justify-end min-h-[300px]"
+                >
+                    <video
+                        autoplay
+                        loop
+                        muted
+                        playsinline
+                        poster="assets/captura_presupuesto.webp"
+                        class="absolute inset-0 w-full h-full object-cover pointer-events-none z-0"
+                    >
+                        <source src="assets/video/video_presupuesto.mp4" type="video/mp4" />
+                    </video>
+
+                    <div class="relative z-20 max-w-xl md:mx-0">
+                        <h2
+                            class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight uppercase filter drop-shadow-[1px_1px_0px_rgba(0,0,0,1)] drop-shadow-[-1px_-1px_0px_rgba(0,0,0,1)] drop-shadow-[0_4px_6px_rgba(0,0,0,0.8)]"
                         >
-                    </h2>
-                    <p class="text-slate-400 mt-3 text-sm sm:text-base max-w-xl mx-auto md:mx-0">
-                        Completá el formulario en menos de 2 minutos. Contanos qué tenés en mente y te armamos una
-                        propuesta a la medida de tu marca.
-                    </p>
+                            Cotizá tu
+                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-logo-fucsia to-logo-cian"
+                                >Proyecto</span
+                            >
+                        </h2>
+                        <p
+                            class="mt-3 text-white text-sm sm:text-base font-semibold antialiased filter drop-shadow-[1px_1px_1px_rgba(0,0,0,1)] drop-shadow-[-1px_1px_1px_rgba(0,0,0,1)] drop-shadow-[1px_-1px_1px_rgba(0,0,0,1)] drop-shadow-[-1px_-1px_1px_rgba(0,0,0,1)] drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]"
+                        >
+                            Completá el formulario en menos de 2 minutos. Contanos qué tenés en mente y te armamos una
+                            propuesta a la medida de tu marca.
+                        </p>
+                    </div>
                 </div>
 
                 <!-- Contenedor Principal del Formulario -->
@@ -768,17 +816,36 @@
             <!-- SECCIÓN: DISEñO                            -->
             <!-- ========================================== -->
             <section id="diseno" class="max-w-[90rem] w-full py-16 px-4 md:px-6 mx-auto scroll-mt-20">
-                <div class="border-2 border-red-500 mb-12 text-center md:text-left">
-                    <h2 class="text-3xl font-extrabold text-white sm:text-4xl tracking-tight uppercase">
-                        Servicios de
-                        <span class="bg-gradient-to-r from-logo-cian to-logo-fucsia bg-clip-text text-transparent"
-                            >Diseño</span
+                <div
+                    class="text-center md:text-left relative mb-12 overflow-hidden rounded-xl bg-slate-900 px-6 pb-6 pt-24 text-left flex flex-col justify-end min-h-[300px]"
+                >
+                    <video
+                        autoplay
+                        loop
+                        muted
+                        playsinline
+                        poster="assets/captura_disenio.webp"
+                        class="absolute inset-0 w-full h-full object-cover pointer-events-none z-0"
+                    >
+                        <source src="assets/video/video_disenio.mp4" type="video/mp4" />
+                    </video>
+
+                    <div class="relative z-20 max-w-xl md:mx-0">
+                        <h2
+                            class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight uppercase filter drop-shadow-[1px_1px_0px_rgba(0,0,0,1)] drop-shadow-[-1px_-1px_0px_rgba(0,0,0,1)] drop-shadow-[0_4px_6px_rgba(0,0,0,0.8)]"
                         >
-                    </h2>
-                    <p class="text-slate-400 mt-3 text-sm sm:text-base max-w-xl mx-auto md:mx-0">
-                        Soluciones visuales y de experiencia de usuario diseñadas para hacer destacar tu marca con una
-                        estética de alto impacto.
-                    </p>
+                            Servicios de
+                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-logo-fucsia to-logo-cian"
+                                >Diseño</span
+                            >
+                        </h2>
+                        <p
+                            class="mt-3 text-white text-sm sm:text-base font-semibold antialiased filter drop-shadow-[1px_1px_1px_rgba(0,0,0,1)] drop-shadow-[-1px_1px_1px_rgba(0,0,0,1)] drop-shadow-[1px_-1px_1px_rgba(0,0,0,1)] drop-shadow-[-1px_-1px_1px_rgba(0,0,0,1)] drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]"
+                        >
+                            Soluciones visuales y de experiencia de usuario diseñadas para hacer destacar tu marca con
+                            una estética de alto impacto.
+                        </p>
+                    </div>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -934,17 +1001,36 @@
                 id="community"
                 class="max-w-[90rem] w-full py-16 px-4 md:px-6 mx-auto border-t border-zinc-900/50 scroll-mt-20"
             >
-                <div class="border-2 border-red-500 mb-12 text-center md:text-left">
-                    <h2 class="text-3xl font-extrabold text-white sm:text-4xl tracking-tight uppercase">
-                        Community
-                        <span class="bg-gradient-to-r from-logo-fucsia to-logo-cian bg-clip-text text-transparent"
-                            >Management</span
+                <div
+                    class="text-center md:text-left relative mb-12 overflow-hidden rounded-xl bg-slate-900 px-6 pb-6 pt-24 text-left flex flex-col justify-end min-h-[300px]"
+                >
+                    <video
+                        autoplay
+                        loop
+                        muted
+                        playsinline
+                        poster="assets/captura_community.webp"
+                        class="absolute inset-0 w-full h-full object-cover pointer-events-none z-0"
+                    >
+                        <source src="assets/video/video_community.mp4" type="video/mp4" />
+                    </video>
+
+                    <div class="relative z-20 max-w-xl md:mx-0">
+                        <h2
+                            class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight uppercase filter drop-shadow-[1px_1px_0px_rgba(0,0,0,1)] drop-shadow-[-1px_-1px_0px_rgba(0,0,0,1)] drop-shadow-[0_4px_6px_rgba(0,0,0,0.8)]"
                         >
-                    </h2>
-                    <p class="text-slate-400 mt-3 text-sm sm:text-base max-w-xl mx-auto md:mx-0">
-                        Estrategia, crecimiento orgánico y gestión profesional de comunidades digitales para conectar tu
-                        negocio con el público ideal.
-                    </p>
+                            Community
+                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-logo-fucsia to-logo-cian"
+                                >Management</span
+                            >
+                        </h2>
+                        <p
+                            class="mt-3 text-white text-sm sm:text-base font-semibold antialiased filter drop-shadow-[1px_1px_1px_rgba(0,0,0,1)] drop-shadow-[-1px_1px_1px_rgba(0,0,0,1)] drop-shadow-[1px_-1px_1px_rgba(0,0,0,1)] drop-shadow-[-1px_-1px_1px_rgba(0,0,0,1)] drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]"
+                        >
+                            Estrategia, crecimiento orgánico y gestión profesional de comunidades digitales para
+                            conectar tu negocio con el público ideal.
+                        </p>
+                    </div>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -1100,123 +1186,37 @@
             <!-- SECCIÓN: TRABAJOS / PORTFOLIO              -->
             <!-- ========================================== -->
             <section id="portfolio" class="max-w-[90rem] w-full px-4 md:px-6 py-16 mx-auto scroll-mt-20">
-                <!-- Cabecera de la sección -->
-                <div class="border-2 border-red-500 mb-12 text-center md:text-left">
-                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight uppercase">
-                        Casos de
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-logo-fucsia to-logo-cian"
-                            >Éxito</span
-                        >
-                    </h2>
-                    <p class="text-slate-400 mt-3 text-sm sm:text-base max-w-xl mx-auto md:mx-0">
-                        Explorá algunos de nuestros proyectos más recientes, donde fusionamos código sólido, diseño de
-                        vanguardia y estrategia digital.
-                    </p>
-                </div>
-
-                <!-- Tarjeta del Proyecto: Realissa Developments -->
+                <!-- Forzamos la relación de aspecto exacta del video en pantallas medianas y grandes -->
                 <div
-                    class="bg-zinc-950/60 border border-zinc-800/80 rounded-3xl p-5 sm:p-8 lg:p-10 shadow-2xl flex flex-col lg:flex-row items-center gap-8 lg:gap-12 relative overflow-hidden backdrop-blur-md"
+                    class="text-left relative mb-12 overflow-hidden rounded-xl bg-slate-900 px-6 pb-6 pt-24 flex flex-col justify-end min-h-[320px] md:min-h-0 md:aspect-[1920/964]"
                 >
-                    <!-- Brillo decorativo sutil de fondo -->
-                    <div class="absolute -bottom-10 -left-10 w-72 h-72 bg-logo-cian/5 blur-[100px] -z-10"></div>
+                    <video
+                        autoplay
+                        loop
+                        muted
+                        playsinline
+                        poster="assets/captura_trabajos_web.webp"
+                        class="absolute inset-0 w-full h-full object-cover pointer-events-none z-0"
+                    >
+                        <source src="assets/video/video_clientes_mosaico.mp4" type="video/mp4" />
+                        Tu navegador no soporta videos.
+                    </video>
 
-                    <!-- Lado Izquierdo: Contenedor de la Imagen (Captura) -->
-                    <div class="w-full lg:w-1/2 group relative">
-                        <!-- Efecto de resplandor al pasar el mouse por la imagen -->
-                        <div
-                            class="absolute -inset-1 rounded-2xl bg-gradient-to-r from-logo-fucsia to-logo-cian opacity-20 group-hover:opacity-40 blur transition duration-500"
-                        ></div>
-
-                        <div
-                            class="relative overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900 aspect-[16/10]"
+                    <div class="relative z-20 max-w-xl md:mx-0">
+                        <h2
+                            class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight uppercase filter drop-shadow-[1px_1px_0px_rgba(0,0,0,1)] drop-shadow-[-1px_-1px_0px_rgba(0,0,0,1)] drop-shadow-[0_4px_6px_rgba(0,0,0,0.8)]"
                         >
-                            <img
-                                src="assets/realissa.png"
-                                alt="Captura de Realissa Developments"
-                                class="w-full h-full object-cover object-top transform group-hover:scale-[1.03] transition duration-500 ease-out"
-                            />
-                            <!-- Overlay oscuro que se aclara al hacer hover -->
-                            <div
-                                class="absolute inset-0 bg-zinc-950/20 group-hover:bg-transparent transition duration-500"
-                            ></div>
-                        </div>
-                    </div>
-
-                    <!-- Lado Derecho: Información del Proyecto -->
-                    <div class="w-full lg:w-1/2 flex flex-col justify-center space-y-6">
-                        <div>
-                            <span
-                                class="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-logo-cian bg-logo-cian/10 border border-logo-cian/20 px-3 py-1 rounded-full inline-block"
+                            Casos de
+                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-logo-fucsia to-logo-cian"
+                                >Éxito</span
                             >
-                                Proyecto Destacado
-                            </span>
-                            <h3 class="text-2xl sm:text-3xl font-bold text-white mt-3 tracking-tight">
-                                Realissa Developments
-                            </h3>
-                            <p class="text-slate-400 mt-3 text-sm sm:text-base leading-relaxed">
-                                Transformación digital integral para una plataforma inmobiliaria premium. Desarrollamos
-                                una interfaz sofisticada, rápida y optimizada que refleja exclusividad en cada detalle
-                                visual y funcional.
-                            </p>
-                        </div>
-
-                        <!-- Lista de servicios aplicados tipo Tags/Etiquetas -->
-                        <div class="space-y-3">
-                            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">
-                                Servicios Prestados:
-                            </h4>
-                            <div class="flex flex-wrap gap-2">
-                                <span
-                                    class="px-3 py-1.5 text-xs font-medium text-zinc-300 bg-zinc-900 border border-zinc-800 rounded-lg hover:border-zinc-700 transition duration-300"
-                                >
-                                    ✨ Diseño UI/UX
-                                </span>
-                                <span
-                                    class="px-3 py-1.5 text-xs font-medium text-zinc-300 bg-zinc-900 border border-zinc-800 rounded-lg hover:border-zinc-700 transition duration-300"
-                                >
-                                    💻 Desarrollo Web
-                                </span>
-                                <span
-                                    class="px-3 py-1.5 text-xs font-medium text-zinc-300 bg-zinc-900 border border-zinc-800 rounded-lg hover:border-zinc-700 transition duration-300"
-                                >
-                                    📱 Community Management
-                                </span>
-                                <span
-                                    class="px-3 py-1.5 text-xs font-medium text-zinc-300 bg-zinc-900 border border-zinc-800 rounded-lg hover:border-zinc-700 transition duration-300"
-                                >
-                                    🎨 Diseño Branding
-                                </span>
-                            </div>
-                        </div>
-
-                        <hr class="border-zinc-800/80 my-2" />
-
-                        <!-- Botón de acción hacia la web externa -->
-                        <div class="pt-2 flex sm:inline-flex">
-                            <a
-                                href="https://realissadevelopments.com"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="w-full sm:w-auto inline-flex items-center justify-center gap-2 text-sm font-semibold text-white bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-logo-cian px-5 py-3 rounded-xl transition-all duration-300 group shadow-md"
-                            >
-                                Ir a la página
-                                <!-- Icono de flecha saliente -->
-                                <svg
-                                    class="w-4 h-4 text-slate-400 group-hover:text-logo-cian transform group-hover:translate-x-1 group-hover:-translate-y-0.5 transition duration-300"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                                    />
-                                </svg>
-                            </a>
-                        </div>
+                        </h2>
+                        <p
+                            class="mt-3 text-white text-sm sm:text-base font-semibold antialiased filter drop-shadow-[1px_1px_1px_rgba(0,0,0,1)] drop-shadow-[-1px_1px_1px_rgba(0,0,0,1)] drop-shadow-[1px_-1px_1px_rgba(0,0,0,1)] drop-shadow-[-1px_-1px_1px_rgba(0,0,0,1)] drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]"
+                        >
+                            Explorá algunos de nuestros proyectos más recientes, donde fusionamos código sólido, diseño
+                            de vanguardia y estrategia digital.
+                        </p>
                     </div>
                 </div>
             </section>
@@ -1389,7 +1389,7 @@
 
                             <!-- LinkedIn - Versión Oficial Redibujada y Centrada -->
                             <a
-                                href="www.linkedin.com/in/epa-studio"
+                                href="https://www.linkedin.com/in/epa-studio/"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 class="text-slate-400 hover:text-white p-2.5 bg-zinc-950/60 border border-zinc-900 rounded-xl hover:border-blue-700/60 hover:shadow-lg hover:shadow-blue-700/10 transition-all duration-300"

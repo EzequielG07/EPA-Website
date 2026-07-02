@@ -388,6 +388,50 @@ function cambiarIdioma(codigo) {
     location.reload();
 }
 
+//************************************************************************************************* */
+
+document.addEventListener('DOMContentLoaded', function () {
+    const loader = document.getElementById('instagram-loader');
+    const wrapper = document.querySelector('.instagram-embed-wrapper');
+
+    // Intervalo para capturar el momento exacto en que nace el iframe real
+    const checkIframeCreation = setInterval(() => {
+        const iframe = wrapper.querySelector('iframe');
+
+        if (iframe) {
+            // Frenamos la búsqueda del elemento porque ya apareció en el DOM
+            clearInterval(checkIframeCreation);
+
+            // ESCUCHA REAL: Esperamos a que todo el contenido interno del iframe termine de descargar
+            iframe.onload = function () {
+                const blockquote = wrapper.querySelector('blockquote.instagram-media');
+
+                // 1. Mostramos el bloque de Instagram ya renderizado
+                if (blockquote) blockquote.style.opacity = '1';
+
+                // 2. Desvanecemos nuestro loader instantáneamente (150ms)
+                loader.classList.add('loader-hidden');
+
+                // 3. Lo barremos del DOM
+                setTimeout(() => {
+                    loader.remove();
+                }, 1000);
+            };
+        }
+    }, 200); // Revisión ágil cada 100ms
+
+    // Alivio de seguridad: Límite estricto por caídas de red de Meta
+    setTimeout(() => {
+        clearInterval(checkIframeCreation);
+        if (loader) {
+            const blockquote = wrapper.querySelector('blockquote.instagram-media');
+            if (blockquote) blockquote.style.opacity = '1';
+            loader.classList.add('loader-hidden');
+            setTimeout(() => loader.remove(), 1000);
+        }
+    }, 8000);
+});
+
 // // --- LÓGICA DEL NAVBAR RESPONSIVE ---
 // const menuBtn = document.getElementById('menu-btn');
 // const mobileMenu = document.getElementById('mobile-menu');
