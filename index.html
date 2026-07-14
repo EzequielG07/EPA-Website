@@ -395,17 +395,25 @@
                 <div
                     class="text-center md:text-left relative mb-12 overflow-hidden rounded-xl bg-slate-900 px-6 pb-6 pt-24 text-left flex flex-col justify-end min-h-[300px]"
                 >
+                    <!-- 1. IMAGEN DE REEMPLAZO (Solo visible en Celulares/Tablets) -->
+                    <div
+                        class="absolute inset-0 w-full h-full bg-cover bg-center block md:hidden pointer-events-none z-0"
+                        style="background-image: url('assets/img/cel_presupuesto.webp')"
+                    ></div>
+
+                    <!-- 2. VIDEO DE FONDO (Solo visible en Computadoras) -->
                     <video
                         autoplay
                         loop
                         muted
                         playsinline
                         poster="assets/captura_presupuesto.webp"
-                        class="absolute inset-0 w-full h-full object-cover pointer-events-none z-0"
+                        class="absolute inset-0 w-full h-full object-cover pointer-events-none z-0 hidden md:block"
                     >
                         <source src="assets/video/video_presupuesto.mp4" type="video/mp4" />
                     </video>
 
+                    <!-- 3. CONTENIDO DE TEXTO -->
                     <div class="relative z-20 max-w-xl md:mx-0">
                         <h2
                             class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight uppercase filter drop-shadow-[1px_1px_0px_rgba(0,0,0,1)] drop-shadow-[-1px_-1px_0px_rgba(0,0,0,1)] drop-shadow-[0_4px_6px_rgba(0,0,0,0.8)]"
@@ -819,13 +827,18 @@
                 <div
                     class="text-center md:text-left relative mb-12 overflow-hidden rounded-xl bg-slate-900 px-6 pb-6 pt-24 text-left flex flex-col justify-end min-h-[300px]"
                 >
+                    <div
+                        class="absolute inset-0 w-full h-full bg-cover bg-center block md:hidden pointer-events-none z-0"
+                        style="background-image: url('assets/img/cel_disenio.webp')"
+                    ></div>
+
                     <video
                         autoplay
                         loop
                         muted
                         playsinline
                         poster="assets/captura_disenio.webp"
-                        class="absolute inset-0 w-full h-full object-cover pointer-events-none z-0"
+                        class="absolute inset-0 w-full h-full object-cover pointer-events-none z-0 hidden md:block"
                     >
                         <source src="assets/video/video_disenio.mp4" type="video/mp4" />
                     </video>
@@ -1004,13 +1017,18 @@
                 <div
                     class="text-center md:text-left relative mb-12 overflow-hidden rounded-xl bg-slate-900 px-6 pb-6 pt-24 text-left flex flex-col justify-end min-h-[300px]"
                 >
+                    <div
+                        class="absolute inset-0 w-full h-full bg-contain bg-center bg-no-repeat block md:hidden pointer-events-none z-0"
+                        style="background-image: url('assets/img/cel_community.webp')"
+                    ></div>
+
                     <video
                         autoplay
                         loop
                         muted
                         playsinline
                         poster="assets/captura_community.webp"
-                        class="absolute inset-0 w-full h-full object-cover pointer-events-none z-0"
+                        class="absolute inset-0 w-full h-full object-cover pointer-events-none z-0 hidden md:block"
                     >
                         <source src="assets/video/video_community.mp4" type="video/mp4" />
                     </video>
