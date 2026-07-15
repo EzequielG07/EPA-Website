@@ -391,45 +391,114 @@ function cambiarIdioma(codigo) {
 //************************************************************************************************* */
 
 document.addEventListener('DOMContentLoaded', function () {
-    const loader = document.getElementById('instagram-loader');
-    const wrapper = document.querySelector('.instagram-embed-wrapper');
+    const openBtn = document.getElementById('open-instagram-modal');
+    const modal = document.getElementById('instagram-modal');
+    const overlay = document.getElementById('modal-overlay');
+    const closeBtn = document.getElementById('close-modal');
+    const embedTarget = document.getElementById('modal-embed-target');
+    const loader = document.getElementById('modal-loader');
 
-    // Intervalo para capturar el momento exacto en que nace el iframe real
-    const checkIframeCreation = setInterval(() => {
-        const iframe = wrapper.querySelector('iframe');
+    if (!openBtn || !modal) return;
 
-        if (iframe) {
-            // Frenamos la búsqueda del elemento porque ya apareció en el DOM
-            clearInterval(checkIframeCreation);
+    // Guardamos la referencia de búsqueda del iframe para poder limpiarlo
+    let checkIframeInterval = null;
 
-            // ESCUCHA REAL: Esperamos a que todo el contenido interno del iframe termine de descargar
-            iframe.onload = function () {
-                const blockquote = wrapper.querySelector('blockquote.instagram-media');
+    // Función para abrir el modal y cargar el video
+    function openModal() {
+        const reelId = openBtn.getAttribute('data-reel-id');
 
-                // 1. Mostramos el bloque de Instagram ya renderizado
-                if (blockquote) blockquote.style.opacity = '1';
+        // 1. Bloqueamos el scroll del body de fondo
+        document.body.classList.add('overflow-hidden');
 
-                // 2. Desvanecemos nuestro loader instantáneamente (150ms)
-                loader.classList.add('loader-hidden');
+        // 2. Mostramos el contenedor del modal
+        modal.classList.remove('pointer-events-none', 'opacity-0');
+        modal.classList.add('opacity-100');
+        modal.querySelector('.relative').classList.remove('scale-95');
+        modal.querySelector('.relative').classList.add('scale-100');
 
-                // 3. Lo barremos del DOM
-                setTimeout(() => {
-                    loader.remove();
-                }, 1000);
-            };
+        // 3. Mostramos el loader interno
+        loader.style.opacity = '1';
+
+        // 4. Inyectamos el código del Embed de Instagram
+        embedTarget.innerHTML = `
+            <div id="modal-loader" class="absolute inset-0 bg-zinc-900/95 rounded-2xl flex flex-col items-center justify-center space-y-4 transition-opacity duration-300">
+                ${loader.innerHTML}
+            </div>
+            <blockquote class="instagram-media" 
+                        data-instgrm-captioned 
+                        data-instgrm-permalink="https://www.instagram.com/reel/${reelId}/?utm_source=ig_embed&amp;utm_campaign=loading" 
+                        data-instgrm-version="14">
+            </blockquote>
+        `;
+
+        // 5. Cargamos dinámicamente la SDK de Instagram (Si ya está cargada, Meta la reinicializa)
+        if (window.instgrm) {
+            window.instgrm.Embeds.process();
+        } else {
+            const script = document.createElement('script');
+            script.async = true;
+            script.src = '//www.instagram.com/embed.js';
+            document.body.appendChild(script);
         }
-    }, 200); // Revisión ágil cada 100ms
 
-    // Alivio de seguridad: Límite estricto por caídas de red de Meta
-    setTimeout(() => {
-        clearInterval(checkIframeCreation);
-        if (loader) {
-            const blockquote = wrapper.querySelector('blockquote.instagram-media');
-            if (blockquote) blockquote.style.opacity = '1';
-            loader.classList.add('loader-hidden');
-            setTimeout(() => loader.remove(), 1000);
+        // 6. Buscamos la creación real del Iframe
+        const activeLoader = embedTarget.querySelector('#modal-loader');
+
+        checkIframeInterval = setInterval(() => {
+            const iframe = embedTarget.querySelector('iframe');
+            if (iframe) {
+                clearInterval(checkIframeInterval);
+
+                iframe.onload = function () {
+                    // Ocultamos el loader suavemente cuando ya se cargó el contenido
+                    if (activeLoader) {
+                        activeLoader.style.opacity = '0';
+                        setTimeout(() => activeLoader.remove(), 400);
+                    }
+                };
+            }
+        }, 150);
+
+        // Resguardo de seguridad (8 segundos de timeout)
+        setTimeout(() => {
+            clearInterval(checkIframeInterval);
+            if (activeLoader) {
+                activeLoader.style.opacity = '0';
+                setTimeout(() => activeLoader.remove(), 400);
+            }
+        }, 8000);
+    }
+
+    // Función para cerrar el modal y destruir el iframe (Para liberar memoria)
+    function closeModal() {
+        clearInterval(checkIframeInterval);
+
+        // Desvanecemos el modal
+        modal.classList.remove('opacity-100');
+        modal.classList.add('opacity-0', 'pointer-events-none');
+        modal.querySelector('.relative').classList.remove('scale-100');
+        modal.querySelector('.relative').classList.add('scale-95');
+
+        // Habilitamos el scroll del body nuevamente
+        document.body.classList.remove('overflow-hidden');
+
+        // Destruimos el iframe interno para detener la reproducción del video y optimizar recursos
+        setTimeout(() => {
+            embedTarget.innerHTML = '';
+        }, 300);
+    }
+
+    // Eventos de escucha
+    openBtn.addEventListener('click', openModal);
+    closeBtn.addEventListener('click', closeModal);
+    overlay.addEventListener('click', closeModal);
+
+    // Cerrar también con la tecla de escape (Excelente para accesibilidad)
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && modal.classList.contains('opacity-100')) {
+            closeModal();
         }
-    }, 8000);
+    });
 });
 
 // // --- LÓGICA DEL NAVBAR RESPONSIVE ---

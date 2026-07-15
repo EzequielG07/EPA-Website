@@ -288,6 +288,7 @@
                 <div
                     class="bg-zinc-950/80 border border-zinc-800/80 rounded-2xl p-6 sm:p-8 md:p-10 shadow-2xl relative overflow-hidden flex flex-col lg:flex-row items-center gap-8 lg:gap-12"
                 >
+                    <!-- Video / Imagen de fondo del banner -->
                     <div
                         class="absolute inset-0 w-full h-full bg-cover bg-center block md:hidden pointer-events-none z-0"
                         style="background-image: url('assets/img/cel_encabezado.webp')"
@@ -304,6 +305,7 @@
                         <source src="assets/video/video_encabezado_web_optimizado.mp4" type="video/mp4" />
                     </video>
 
+                    <!-- Bloque de textos e invitacion -->
                     <div
                         class="w-full lg:w-1/2 flex flex-col items-center lg:items-start text-center lg:text-left space-y-4 z-10"
                     >
@@ -344,55 +346,142 @@
                         </a>
                     </div>
 
-                    <!-- Contenedor del Embed -->
+                    <!-- Portada Gatillo (Trigger) del Modal -->
                     <div class="w-full lg:w-1/2 flex justify-center z-10 overflow-hidden post-instagram-container">
-                        <div
-                            class="w-full max-w-[300px] xs:max-w-[340px] sm:max-w-sm flex justify-center items-center overflow-hidden instagram-embed-wrapper relative"
+                        <button
+                            id="open-instagram-modal"
+                            data-reel-id="DaxvPbVRCmO"
+                            class="w-full max-w-[300px] xs:max-w-[340px] sm:max-w-sm aspect-[9/16] rounded-2xl overflow-hidden relative cursor-pointer group border border-zinc-800 shadow-2xl focus:outline-none focus:ring-2 focus:ring-logo-fucsia/50"
                         >
-                            <!-- TARJETA DE PRECARGA (Se desvanece por JS cuando el Reel está listo) -->
+                            <!-- Foto de portada real (Usa tu WebP optimizado) -->
+                            <img
+                                src="assets/img/portada_reel.webp"
+                                alt="Último Reel de Instagram"
+                                class="absolute inset-0 w-full h-full object-cover z-0 transition-transform duration-700 group-hover:scale-105 filter brightness-[0.7] group-hover:brightness-[0.5]"
+                            />
+
+                            <!-- Badge de "Último Reel" -->
                             <div
-                                id="instagram-loader"
-                                class="absolute inset-0 bg-zinc-900/90 border border-zinc-800 rounded-xl flex flex-col items-center justify-center space-y-4 z-30 transition-opacity duration-1000 ease-in-out"
+                                class="absolute top-4 left-4 right-4 z-10 flex justify-between items-center text-white/90"
                             >
-                                <!-- Animación de Código: El gradiente de Instagram latiendo sutilmente -->
+                                <div class="flex items-center gap-2">
+                                    <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
+                                    <span
+                                        class="text-xs font-bold uppercase tracking-widest bg-zinc-950/70 px-2 py-0.5 rounded-md border border-white/10"
+                                        >Último Reel</span
+                                    >
+                                </div>
+                                <svg class="w-6 h-6 filter drop-shadow" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07... (mismo path de IG)" />
+                                </svg>
+                            </div>
+
+                            <!-- Botón Play de alto impacto visual -->
+                            <div class="absolute inset-0 flex items-center justify-center z-10">
                                 <div
-                                    class="relative w-16 h-16 rounded-2xl bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] p-[3px] animate-pulse shadow-lg shadow-black/50"
+                                    class="w-16 h-16 rounded-full bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] p-[3px] shadow-2xl transition-all duration-300 group-hover:scale-110 shadow-black/80"
                                 >
                                     <div
-                                        class="w-full h-full bg-zinc-900 rounded-[13px] flex items-center justify-center"
+                                        class="w-full h-full bg-zinc-950/90 rounded-full flex items-center justify-center text-white"
                                     >
-                                        <!-- Icono de cámara minimalista en SVG -->
                                         <svg
-                                            class="w-8 h-8 text-white/90"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            stroke-width="2"
+                                            class="w-6 h-6 ml-1 transition-transform duration-300 group-hover:scale-105"
+                                            fill="currentColor"
                                             viewBox="0 0 24 24"
                                         >
-                                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                                            <path d="M8 5v14l11-7z" />
                                         </svg>
                                     </div>
                                 </div>
-                                <span class="text-xs font-bold uppercase tracking-widest text-zinc-400 animate-pulse"
-                                    >Cargando publicación...</span
-                                >
                             </div>
 
-                            <!-- BLOQUE REAL DE INSTAGRAM -->
-                            <blockquote
-                                class="instagram-media"
-                                data-instgrm-captioned
-                                data-instgrm-permalink="https://www.instagram.com/reel/DVQ_ZxODSJG/?utm_source=ig_embed&amp;utm_campaign=loading"
-                                data-instgrm-version="14"
-                            ></blockquote>
-                            <script async src="//www.instagram.com/embed.js"></script>
-                        </div>
+                            <!-- Footer de la tarjeta con tu usuario -->
+                            <div
+                                class="absolute bottom-0 inset-x-0 text-left bg-gradient-to-t from-black/95 via-black/50 to-transparent p-4 z-10"
+                            >
+                                <p class="text-xs font-bold text-white">@studioepa.ar</p>
+                                <p class="text-xs text-zinc-300 mt-0.5 font-normal">
+                                    Hacé clic para reproducir el video completo
+                                </p>
+                            </div>
+                        </button>
                     </div>
                 </div>
             </section>
 
+            <!-- ==========================================================================
+     MODAL POP-UP (Estructura global que se inyecta por fuera del flujo normal)
+     ========================================================================== -->
+            <div
+                id="instagram-modal"
+                class="fixed inset-0 z-50 flex items-center justify-center opacity-0 pointer-events-none transition-all duration-300"
+                role="dialog"
+                aria-modal="true"
+            >
+                <!-- Fondo oscuro difuminado (Haciendo click acá se cierra el modal) -->
+                <div id="modal-overlay" class="absolute inset-0 bg-black/80 backdrop-blur-md"></div>
+
+                <!-- Contenedor interno del Modal -->
+                <div
+                    class="relative w-full max-w-[420px] px-4 z-10 transform scale-95 transition-transform duration-300 ease-out flex flex-col items-center"
+                >
+                    <!-- Botón para cerrar el Modal -->
+                    <button
+                        id="close-modal"
+                        class="absolute -top-12 right-4 md:-right-10 text-zinc-400 hover:text-white transition-colors duration-200 focus:outline-none"
+                        aria-label="Cerrar modal"
+                    >
+                        <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+
+                    <!-- Contenedor del Iframe de Instagram -->
+                    <div
+                        id="modal-embed-target"
+                        class="w-full bg-transparent rounded-2xl overflow-hidden instagram-embed-wrapper flex justify-center items-center"
+                    >
+                        <!-- Loader de carga que se muestra mientras Meta inicializa el iframe -->
+                        <div
+                            id="modal-loader"
+                            class="absolute inset-0 bg-zinc-900/90 rounded-2xl flex flex-col items-center justify-center space-y-4"
+                        >
+                            <div
+                                class="relative w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] p-[3px] animate-pulse shadow-lg shadow-black/50"
+                            >
+                                <div class="w-full h-full bg-zinc-900 rounded-[13px] flex items-center justify-center">
+                                    <svg
+                                        class="w-7 h-7 text-white/90 animate-spin"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                        stroke-width="3"
+                                    >
+                                        <circle
+                                            class="opacity-25"
+                                            cx="12"
+                                            cy="12"
+                                            r="10"
+                                            stroke="currentColor"
+                                            stroke-width="4"
+                                        ></circle>
+                                        <path
+                                            class="opacity-75"
+                                            fill="currentColor"
+                                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                        ></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <span class="text-xs font-bold uppercase tracking-widest text-zinc-400"
+                                >Cargando Reel...</span
+                            >
+                        </div>
+
+                        <!-- El blockquote/iframe real se inyectará dinámicamente acá -->
+                    </div>
+                </div>
+            </div>
             <!-- ========================================== -->
             <!-- SECCIÓN: SOLICITAR PRESUPUESTO             -->
             <!-- ========================================== -->
