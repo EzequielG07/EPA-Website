@@ -1,0 +1,121 @@
+@import 'tailwindcss';
+
+/* ==========================================================================
+   OPTIMIZACIÓN RESPONSIVE PARA EMBED DE INSTAGRAM
+   ========================================================================== */
+
+/* --- CONTENEDOR PRINCIPAL CON TAMAÑO CONGELADO --- */
+.instagram-embed-wrapper {
+    width: 100%;
+    height: 640px !important;
+    min-height: 640px !important;
+    max-height: 640px !important;
+    position: relative;
+    background: transparent !important;
+}
+
+/* Ocultamos por completo cualquier residuo visual nativo de Instagram */
+.instagram-embed-wrapper blockquote.instagram-media {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    margin: 0 auto !important;
+    min-width: 100% !important;
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out;
+}
+
+/* Fuerza al iframe inyectado a rellenar el molde sin deformar tu Layout */
+.instagram-embed-wrapper iframe {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 100% !important;
+    max-height: 100% !important;
+    border: none !important;
+    background: transparent !important;
+}
+
+/* Clase utilitaria para el JS */
+.loader-hidden {
+    opacity: 0 !important;
+    pointer-events: none;
+}
+
+/* --- SECCIÓN ULTRA RESPONSIVE (OPTIMIZACIÓN CELULARES) --- */
+
+/* Ajustes específicos para Tablets */
+@media (min-width: 768px) and (max-width: 1023px) {
+    #social-feed > div {
+        flex-direction: column !important;
+        padding: 2.5rem !important;
+    }
+    .instagram-embed-wrapper {
+        max-width: 400px !important;
+        height: 580px !important;
+    }
+}
+
+/* Celulares Medios/Estándar (Evita desbordes y cortes de caja) */
+@media (max-width: 480px) {
+    .instagram-embed-wrapper {
+        max-width: 100% !important;
+        /* Le damos un aire extra abajo para que las descripciones largas entren cómodas */
+        height: 540px !important;
+        min-height: 540px !important;
+        max-height: 540px !important;
+    }
+
+    /* Forzamos que el preloader de carga copie exactamente el nuevo alto de celular */
+    #instagram-loader {
+        height: 540px !important;
+    }
+}
+
+/* Celulares Muy Chicos (Pantallas < 360px) - TRUCO DE ESCALADO */
+@media (max-width: 359px) {
+    #social-feed > div {
+        padding: 1rem !important;
+        gap: 1.25rem !important;
+    }
+
+    .instagram-embed-wrapper {
+        max-width: 100% !important;
+        height: 440px !important;
+        min-height: 440px !important;
+        max-height: 440px !important;
+    }
+
+    #instagram-loader {
+        height: 440px !important;
+    }
+
+    /* 
+       Acá está la magia para pantallas ultra chicas:
+       Si Instagram intenta medir 320px + bordes, lo escalamos al 85% de su tamaño.
+       Esto evita que se corte el borde derecho o el texto del Reel.
+    */
+    .instagram-embed-wrapper iframe {
+        transform: scale(0.88) !important;
+        transform-origin: top center !important;
+        width: 112% !important; /* Compensamos el encogimiento para que no queden vacíos laterales */
+        max-width: 112% !important;
+    }
+}
+/*TODO ESTILO BOTON IDIOMA
+/* Ocultar el banner superior que genera Google Translate */
+.skiptranslate,
+.goog-te-banner-frame {
+    display: none !important;
+}
+body {
+    top: 0 !important;
+}
+/* Ocultar el cartel flotante nativo de Google */
+#goog-gt-tt,
+.goog-te-balloon-frame {
+    display: none !important;
+}
+.goog-text-highlight {
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
