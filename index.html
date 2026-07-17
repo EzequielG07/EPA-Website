@@ -499,22 +499,23 @@
             <!-- ========================================== -->
             <section id="presupuesto" class="max-w-[90rem] w-full px-4 sm:px-6 lg:px-8 py-16 mx-auto scroll-mt-24">
                 <div
-                    class="text-left relative mb-12 overflow-hidden rounded-xl bg-zinc-950/60 border border-zinc-800/80 px-6 pb-6 pt-24 text-left flex flex-col justify-end min-h-[300px]"
+                    class="relative mb-12 overflow-hidden rounded-xl bg-zinc-950/60 border border-zinc-800/80 px-6 pb-6 pt-24 text-left flex flex-col justify-end min-h-[300px] [@media(max-height:500px)]:min-h-[200px] [@media(max-height:500px)]:pt-12 transition-all duration-300"
                 >
-                    <!-- 1. IMAGEN DE REEMPLAZO (Solo visible en Celulares/Tablets) -->
+                    <!-- 1. IMAGEN DE REEMPLAZO (Solo visible en Celulares/Tablets en vertical) -->
                     <div
                         class="absolute inset-0 w-full h-full bg-contain bg-no-repeat block md:hidden pointer-events-none z-0"
                         style="background-image: url('assets/img/cel_presupuesto.webp')"
                     ></div>
 
-                    <!-- 2. VIDEO DE FONDO (Solo visible en Computadoras) -->
+                    <!-- 2. VIDEO DE FONDO (Visible en PCs y Celulares en Horizontal) -->
+                    <!--Ajustá 'object-center' por 'object-top' u 'object-bottom' si la acción del video queda muy arriba o abajo -->
                     <video
                         autoplay
                         loop
                         muted
                         playsinline
                         poster="assets/captura_presupuesto.webp"
-                        class="absolute inset-0 w-full h-full object-cover pointer-events-none z-0 hidden md:block"
+                        class="absolute inset-0 w-full h-full object-cover object-center pointer-events-none z-0 hidden md:block [@media(max-height:500px)]:block"
                     >
                         <source src="assets/video/video_presupuesto.mp4" type="video/mp4" />
                     </video>
@@ -522,7 +523,7 @@
                     <!-- 3. CONTENIDO DE TEXTO -->
                     <div class="relative z-20 max-w-xl md:mx-0">
                         <h2
-                            class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight uppercase filter drop-shadow-[1px_1px_0px_rgba(0,0,0,1)] drop-shadow-[-1px_-1px_0px_rgba(0,0,0,1)] drop-shadow-[0_4px_6px_rgba(0,0,0,0.8)]"
+                            class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight uppercase filter drop-shadow-[1px_1px_0px_rgba(0,0,0,1)] drop-shadow-[-1px_-1px_0px_rgba(0,0,0,1)] drop-shadow-[0_4px_6px_rgba(0,0,0,0.8)] [@media(max-height:500px)]:text-2xl"
                         >
                             Cotizá tu
                             <span class="text-transparent bg-clip-text bg-gradient-to-r from-logo-fucsia to-logo-cian"
@@ -530,7 +531,7 @@
                             >
                         </h2>
                         <p
-                            class="mt-3 text-white text-sm sm:text-base font-semibold antialiased filter drop-shadow-[1px_1px_1px_rgba(0,0,0,1)] drop-shadow-[-1px_1px_1px_rgba(0,0,0,1)] drop-shadow-[1px_-1px_1px_rgba(0,0,0,1)] drop-shadow-[-1px_-1px_1px_rgba(0,0,0,1)] drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]"
+                            class="mt-3 text-white text-sm sm:text-base font-semibold antialiased filter drop-shadow-[1px_1px_1px_rgba(0,0,0,1)] drop-shadow-[-1px_1px_1px_rgba(0,0,0,1)] drop-shadow-[1px_-1px_1px_rgba(0,0,0,1)] drop-shadow-[-1px_-1px_1px_rgba(0,0,0,1)] drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)] [@media(max-height:500px)]:text-xs [@media(max-height:500px)]:mt-1"
                         >
                             Completá el formulario en menos de 2 minutos. Contanos qué tenés en mente y te armamos una
                             propuesta a la medida de tu marca.
@@ -931,8 +932,11 @@
             <!-- ========================================== -->
             <section id="diseno" class="max-w-[90rem] w-full py-16 px-4 md:px-6 mx-auto scroll-mt-20">
                 <div
-                    class="text-center md:text-left relative mb-12 overflow-hidden rounded-xl bg-zinc-950/60 border border-zinc-800/80 px-6 pb-6 pt-24 text-left flex flex-col justify-end min-h-[300px]"
+                    class="relative mb-12 overflow-hidden rounded-xl bg-zinc-950/60 border border-zinc-800/80 px-6 pb-6 pt-24 text-left flex flex-col justify-end min-h-[300px] [@media(max-height:500px)]:min-h-[200px] [@media(max-height:500px)]:pt-12 transition-all duration-300"
                 >
+                    <!-- <div
+                    class="text-center md:text-left relative mb-12 overflow-hidden rounded-xl bg-zinc-950/60 border border-zinc-800/80 px-6 pb-6 pt-24 text-left flex flex-col justify-end min-h-[300px]"
+                > -->
                     <div
                         class="absolute inset-0 w-full h-full bg-contain bg-no-repeat block md:hidden pointer-events-none z-0"
                         style="background-image: url('assets/img/cel_disenio.webp')"
@@ -944,7 +948,7 @@
                         muted
                         playsinline
                         poster="assets/captura_disenio.webp"
-                        class="absolute inset-0 w-full h-full object-cover pointer-events-none z-0 hidden md:block"
+                        class="absolute inset-0 w-full h-full object-cover object-center pointer-events-none z-0 hidden md:block [@media(max-height:500px)]:block"
                     >
                         <source src="assets/video/video_disenio.mp4" type="video/mp4" />
                     </video>
@@ -1121,7 +1125,7 @@
                 class="max-w-[90rem] w-full py-16 px-4 md:px-6 mx-auto border-t border-zinc-900/50 scroll-mt-20"
             >
                 <div
-                    class="text-center md:text-left relative mb-12 overflow-hidden rounded-xl bg-zinc-950/60 border border-zinc-800/80 px-6 pb-6 pt-24 text-left flex flex-col justify-end min-h-[300px]"
+                    class="relative mb-12 overflow-hidden rounded-xl bg-zinc-950/60 border border-zinc-800/80 px-6 pb-6 pt-24 text-left flex flex-col justify-end min-h-[300px] [@media(max-height:500px)]:min-h-[200px] [@media(max-height:500px)]:pt-12 transition-all duration-300"
                 >
                     <div
                         class="absolute inset-0 w-full h-full bg-contain bg-no-repeat block md:hidden pointer-events-none z-0"
@@ -1134,7 +1138,7 @@
                         muted
                         playsinline
                         poster="assets/captura_community.webp"
-                        class="absolute inset-0 w-full h-full object-cover pointer-events-none z-0 hidden md:block"
+                        class="absolute inset-0 w-full h-full object-cover object-center pointer-events-none z-0 hidden md:block [@media(max-height:500px)]:block"
                     >
                         <source src="assets/video/video_community.mp4" type="video/mp4" />
                     </video>
