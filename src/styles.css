@@ -1,8 +1,8 @@
 @import 'tailwindcss';
 
 /* ==========================================================================
-   CSS DE ADAPTABILIDAD DEL MODAL
-   ========================================================================== */
+    CSS DE ADAPTABILIDAD DEL MODAL
+    ========================================================================== */
 
 /* Altura rígida para mantener la proporción 9:16 del Reel */
 #modal-embed-target {

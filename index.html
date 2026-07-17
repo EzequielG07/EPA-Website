@@ -32,7 +32,7 @@
                     <div class="flex-shrink-0 flex items-center">
                         <a href="#" class="flex items-center group focus:outline-none">
                             <img
-                                src="assets/logo_epa.png"
+                                src="assets/img/logo_epa.png"
                                 alt="Logo EPA!"
                                 class="h-16 w-auto object-contain transition-transform duration-300 group-hover:scale-105 filter drop-shadow-[0_2px_8px_rgba(230,0,160,0.4)]"
                             />
@@ -69,6 +69,7 @@
                             >E-Commerce</a
                         >
 
+                        <!-- Boton idiomas -->
                         <div class="relative py-4 dropdown-idiomas-desktop">
                             <button
                                 type="button"
@@ -190,6 +191,7 @@
                         >E-Commerce</a
                     >
 
+                    <!-- Boton idiomas (mobile) -->
                     <div class="border-t border-zinc-900 pt-3 mt-1">
                         <button
                             type="button"
@@ -268,6 +270,7 @@
             </div>
         </header>
 
+        <!-- Script para Google Translate -->
         <div id="google_translate_element" class="absolute opacity-0 pointer-events-none w-0 h-0 overflow-hidden"></div>
         <script type="text/javascript">
             function googleTranslateElementInit() {
@@ -313,7 +316,7 @@
                         loop
                         muted
                         playsinline
-                        poster="assets/captura_encabezado.webp"
+                        poster="assets/img/captura_encabezado.webp"
                         class="absolute inset-0 w-full h-full object-cover pointer-events-none z-0 hidden md:block"
                     >
                         <source src="assets/video/video_encabezado_web_optimizado.mp4" type="video/mp4" />
@@ -503,26 +506,25 @@
                 <div
                     class="relative mb-12 overflow-hidden rounded-xl bg-zinc-950/60 border border-zinc-800/80 px-6 pb-6 pt-24 text-left flex flex-col justify-end min-h-[300px] [@media(max-height:500px)]:min-h-[200px] [@media(max-height:500px)]:pt-12 transition-all duration-300"
                 >
-                    <!-- 1. IMAGEN DE REEMPLAZO (Solo visible en Celulares/Tablets en vertical) -->
+                    <!-- IMAGEN DE REEMPLAZO (Solo visible en Celulares/Tablets en vertical) -->
                     <div
                         class="absolute inset-0 w-full h-full bg-contain bg-no-repeat block md:hidden pointer-events-none z-0"
                         style="background-image: url('assets/img/cel_presupuesto.webp')"
                     ></div>
 
-                    <!-- 2. VIDEO DE FONDO (Visible en PCs y Celulares en Horizontal) -->
-                    <!--Ajustá 'object-center' por 'object-top' u 'object-bottom' si la acción del video queda muy arriba o abajo -->
+                    <!-- VIDEO DE FONDO (Visible en PCs y Celulares en Horizontal) -->
                     <video
                         autoplay
                         loop
                         muted
                         playsinline
-                        poster="assets/captura_presupuesto.webp"
+                        poster="assets/img/captura_presupuesto.webp"
                         class="absolute inset-0 w-full h-full object-cover object-left pointer-events-none z-0 hidden md:block [@media(max-height:500px)]:block"
                     >
                         <source src="assets/video/video_presupuesto.mp4" type="video/mp4" />
                     </video>
 
-                    <!-- 3. CONTENIDO DE TEXTO -->
+                    <!-- CONTENIDO DE TEXTO -->
                     <div class="relative z-20 max-w-xl md:mx-0">
                         <h2
                             class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight uppercase filter drop-shadow-[1px_1px_0px_rgba(0,0,0,1)] drop-shadow-[-1px_-1px_0px_rgba(0,0,0,1)] drop-shadow-[0_4px_6px_rgba(0,0,0,0.8)] [@media(max-height:500px)]:text-2xl"
@@ -936,9 +938,6 @@
                 <div
                     class="relative mb-12 overflow-hidden rounded-xl bg-zinc-950/60 border border-zinc-800/80 px-6 pb-6 pt-24 text-left flex flex-col justify-end min-h-[300px] [@media(max-height:500px)]:min-h-[200px] [@media(max-height:500px)]:pt-12 transition-all duration-300"
                 >
-                    <!-- <div
-                    class="text-center md:text-left relative mb-12 overflow-hidden rounded-xl bg-zinc-950/60 border border-zinc-800/80 px-6 pb-6 pt-24 text-left flex flex-col justify-end min-h-[300px]"
-                > -->
                     <div
                         class="absolute inset-0 w-full h-full bg-contain bg-no-repeat block md:hidden pointer-events-none z-0"
                         style="background-image: url('assets/img/cel_disenio.webp')"
@@ -949,7 +948,7 @@
                         loop
                         muted
                         playsinline
-                        poster="assets/captura_disenio.webp"
+                        poster="assets/img/captura_disenio.webp"
                         class="absolute inset-0 w-full h-full object-cover object-center pointer-events-none z-0 hidden md:block [@media(max-height:500px)]:block"
                     >
                         <source src="assets/video/video_disenio.mp4" type="video/mp4" />
@@ -1139,7 +1138,7 @@
                         loop
                         muted
                         playsinline
-                        poster="assets/captura_community.webp"
+                        poster="assets/img/captura_community.webp"
                         class="absolute inset-0 w-full h-full object-cover object-right pointer-events-none z-0 hidden md:block [@media(max-height:500px)]:block"
                     >
                         <source src="assets/video/video_community.mp4" type="video/mp4" />
@@ -1320,7 +1319,6 @@
                 id="portfolio"
                 class="max-w-[90rem] w-full px-4 md:px-6 py-16 mx-auto scroll-mt-20 hidden md:block"
             >
-                <!-- Forzamos la relación de aspecto exacta del video en pantallas medianas y grandes -->
                 <div
                     class="text-left relative mb-12 overflow-hidden rounded-xl bg-slate-900 px-6 pb-6 pt-24 flex flex-col justify-end min-h-[320px] md:min-h-0 md:aspect-[1920/964]"
                 >
@@ -1334,7 +1332,7 @@
                         loop
                         muted
                         playsinline
-                        poster="assets/captura_trabajos_web.webp"
+                        poster="assets/img/captura_trabajos_web.webp"
                         class="absolute inset-0 w-full h-full object-cover pointer-events-none z-0 hidden md:block"
                     >
                         <source src="assets/video/video_clientes_mosaico.mp4" type="video/mp4" />
@@ -1576,7 +1574,6 @@
                                 </svg>
                             </a>
 
-                            <!-- LinkedIn - Versión Oficial Redibujada y Centrada -->
                             <a
                                 href="https://www.linkedin.com/in/epa-studio/"
                                 target="_blank"
@@ -1584,7 +1581,6 @@
                                 class="text-slate-400 hover:text-white p-2.5 bg-zinc-950/60 border border-zinc-900 rounded-xl hover:border-blue-700/60 hover:shadow-lg hover:shadow-blue-700/10 transition-all duration-300"
                                 aria-label="LinkedIn"
                             >
-                                <!-- viewBox de 0 0 24 24 con la tipografía escalada y centrada por código interno -->
                                 <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
                                     <path
                                         d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z"
