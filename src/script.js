@@ -388,8 +388,65 @@ function cambiarIdioma(codigo) {
     location.reload();
 }
 
-// --- FUNCIÓN MODAL PARA POST DE INSTAGRAM---
+// ==========================================
+// 1. CONFIGURACIÓN E INICIALIZACIÓN FIREBASE
+// ==========================================
+const firebaseConfig = {
+    apiKey: 'AIzaSyCTEKHrjvi-rZKuV7F6uF8144Oiz8kC-Xs',
+    authDomain: 'epa-studio-web.firebaseapp.com',
+    projectId: 'epa-studio-web',
+    storageBucket: 'epa-studio-web.firebasestorage.app',
+    messagingSenderId: '532664420233',
+    appId: '1:532664420233:web:fafb06c49b5ba2ca2c8358',
+};
+
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}
+const db = firebase.firestore();
+
+// ==========================================
+// 2. LECTURA EN TIEMPO REAL (INSTAGRAM REEL)
+// ==========================================
+// ==========================================
+// LECTURA EN TIEMPO REAL (INSTAGRAM REEL)
+// ==========================================
+function suscribirInstagramReel() {
+    db.collection('config')
+        .doc('instagram')
+        .onSnapshot(
+            (doc) => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    const btnModal =
+                        document.getElementById('open-instagram-modal') || document.querySelector('[data-reel-id]');
+                    const imgCover =
+                        document.getElementById('reel-cover-img') || (btnModal ? btnModal.querySelector('img') : null);
+
+                    // 1. Asignamos la URL limpia del Reel o el ID para el reproductor/modal
+                    if (btnModal) {
+                        if (data.reelId) btnModal.setAttribute('data-reel-id', data.reelId);
+                        if (data.reelUrl) btnModal.setAttribute('data-reel-url', data.reelUrl);
+                    }
+
+                    // 2. Asignamos la portada alojada en Firebase Storage
+                    if (imgCover && data.coverUrl) {
+                        imgCover.src = data.coverUrl;
+                    }
+                }
+            },
+            (error) => {
+                console.error('Error al obtener los datos de Instagram desde Firebase:', error);
+            },
+        );
+}
+
+// ==========================================
+// 3. CONTROL Y MANEJO DEL MODAL
+// ==========================================
 document.addEventListener('DOMContentLoaded', function () {
+    suscribirInstagramReel();
+
     const openBtn = document.getElementById('open-instagram-modal');
     const modal = document.getElementById('instagram-modal');
     const overlay = document.getElementById('modal-overlay');
@@ -399,29 +456,26 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (!openBtn || !modal) return;
 
-    // Guardamos la referencia de búsqueda del iframe para poder limpiarlo
     let checkIframeInterval = null;
 
-    // Función para abrir el modal y cargar el video
     function openModal() {
         const reelId = openBtn.getAttribute('data-reel-id');
+        if (!reelId) return;
 
-        // 1. Bloqueamos el scroll del body de fondo
         document.body.classList.add('overflow-hidden');
 
-        // 2. Mostramos el contenedor del modal
         modal.classList.remove('pointer-events-none', 'opacity-0');
         modal.classList.add('opacity-100');
-        modal.querySelector('.relative').classList.remove('scale-95');
-        modal.querySelector('.relative').classList.add('scale-100');
+        const modalContainer = modal.querySelector('.relative');
+        if (modalContainer) {
+            modalContainer.classList.remove('scale-95');
+            modalContainer.classList.add('scale-100');
+        }
 
-        // 3. Mostramos el loader interno
-        loader.style.opacity = '1';
-
-        // 4. Inyectamos el código del Embed de Instagram
+        // Inyección del blockquote dinámico de Instagram
         embedTarget.innerHTML = `
-            <div id="modal-loader" class="absolute inset-0 bg-zinc-900/95 rounded-2xl flex flex-col items-center justify-center space-y-4 transition-opacity duration-300">
-                ${loader.innerHTML}
+            <div id="modal-loader" class="absolute inset-0 bg-zinc-900/95 rounded-2xl flex flex-col items-center justify-center space-y-4 transition-opacity duration-300 z-20">
+                ${loader ? loader.innerHTML : '<span class="text-xs font-bold text-zinc-400">Cargando Reel...</span>'}
             </div>
             <blockquote class="instagram-media" 
                         data-instgrm-captioned 
@@ -430,8 +484,8 @@ document.addEventListener('DOMContentLoaded', function () {
             </blockquote>
         `;
 
-        // 5. Cargamos dinámicamente la SDK de Instagram (Si ya está cargada, Meta la reinicializa)
-        if (window.instgrm) {
+        // Procesamiento del embed mediante el SDK de Instagram
+        if (window.instgrm && window.instgrm.Embeds) {
             window.instgrm.Embeds.process();
         } else {
             const script = document.createElement('script');
@@ -440,16 +494,12 @@ document.addEventListener('DOMContentLoaded', function () {
             document.body.appendChild(script);
         }
 
-        // 6. Buscamos la creación real del Iframe
         const activeLoader = embedTarget.querySelector('#modal-loader');
-
         checkIframeInterval = setInterval(() => {
             const iframe = embedTarget.querySelector('iframe');
             if (iframe) {
                 clearInterval(checkIframeInterval);
-
                 iframe.onload = function () {
-                    // Ocultamos el loader suavemente cuando ya se cargó el contenido
                     if (activeLoader) {
                         activeLoader.style.opacity = '0';
                         setTimeout(() => activeLoader.remove(), 400);
@@ -458,7 +508,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }, 150);
 
-        // Resguardo de seguridad (8 segundos de timeout)
         setTimeout(() => {
             clearInterval(checkIframeInterval);
             if (activeLoader) {
@@ -468,31 +517,28 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 8000);
     }
 
-    // Función para cerrar el modal y destruir el iframe (Para liberar memoria)
     function closeModal() {
         clearInterval(checkIframeInterval);
 
-        // Desvanecemos el modal
         modal.classList.remove('opacity-100');
         modal.classList.add('opacity-0', 'pointer-events-none');
-        modal.querySelector('.relative').classList.remove('scale-100');
-        modal.querySelector('.relative').classList.add('scale-95');
+        const modalContainer = modal.querySelector('.relative');
+        if (modalContainer) {
+            modalContainer.classList.remove('scale-100');
+            modalContainer.classList.add('scale-95');
+        }
 
-        // Habilitamos el scroll del body nuevamente
         document.body.classList.remove('overflow-hidden');
 
-        // Destruimos el iframe interno para detener la reproducción del video y optimizar recursos
         setTimeout(() => {
-            embedTarget.innerHTML = '';
+            if (embedTarget) embedTarget.innerHTML = '';
         }, 300);
     }
 
-    // Eventos de escucha
     openBtn.addEventListener('click', openModal);
-    closeBtn.addEventListener('click', closeModal);
-    overlay.addEventListener('click', closeModal);
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    if (overlay) overlay.addEventListener('click', closeModal);
 
-    // Cerrar también con la tecla de escape (Excelente para accesibilidad)
     document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape' && modal.classList.contains('opacity-100')) {
             closeModal();

@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Panel de Administración | Studio EPA</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        colors: {
+                            'logo-fucsia': '#ee2a7b',
+                            'logo-cian': '#00aeef',
+                        },
+                    },
+                },
+            };
+        </script>
+    </head>
+    <body class="bg-zinc-950 text-white min-h-screen flex items-center justify-center p-4">
+        <!-- PANTALLA DE LOGIN -->
+        <main
+            id="seccion-login"
+            class="w-full max-w-md bg-zinc-900 border border-zinc-800 rounded-2xl p-6 sm:p-8 shadow-2xl relative"
+        >
+            <div class="mb-6 text-center">
+                <div
+                    class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] mb-3 shadow-lg shadow-logo-fucsia/20"
+                >
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                        />
+                    </svg>
+                </div>
+                <h1 class="text-xl font-bold text-white">Iniciar Sesión</h1>
+                <p class="text-xs text-zinc-400 mt-1">Ingresá tus credenciales para administrar Studio EPA.</p>
+            </div>
+
+            <form id="form-login" class="space-y-4">
+                <div>
+                    <label
+                        for="login-email"
+                        class="block text-xs font-semibold uppercase tracking-wider text-zinc-300 mb-2"
+                    >
+                        Correo Electrónico
+                    </label>
+                    <input
+                        type="email"
+                        id="login-email"
+                        placeholder="admin@estudioepa.com"
+                        required
+                        class="w-full px-4 py-3 bg-zinc-950 border border-zinc-800 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-logo-fucsia focus:border-transparent transition-all placeholder:text-zinc-600"
+                    />
+                </div>
+
+                <div>
+                    <label
+                        for="login-password"
+                        class="block text-xs font-semibold uppercase tracking-wider text-zinc-300 mb-2"
+                    >
+                        Contraseña
+                    </label>
+                    <input
+                        type="password"
+                        id="login-password"
+                        placeholder="••••••••"
+                        required
+                        class="w-full px-4 py-3 bg-zinc-950 border border-zinc-800 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-logo-fucsia focus:border-transparent transition-all placeholder:text-zinc-600"
+                    />
+                </div>
+
+                <button
+                    type="submit"
+                    id="btn-login"
+                    class="w-full py-3 px-4 bg-gradient-to-r from-logo-fucsia to-logo-cian font-semibold text-sm rounded-xl text-white hover:opacity-90 transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-zinc-900 focus:ring-logo-fucsia flex items-center justify-center gap-2 shadow-lg shadow-logo-fucsia/25"
+                >
+                    <span id="btn-login-text">Ingresar al Panel</span>
+                </button>
+            </form>
+
+            <div
+                id="mensaje-login-error"
+                class="mt-4 p-3 rounded-xl text-xs text-center font-medium bg-rose-500/10 text-rose-400 border border-rose-500/20 hidden"
+            ></div>
+        </main>
+
+        <!-- PANEL DE ADMINISTRACIÓN (Tus componentes originales intactos) -->
+        <main
+            id="seccion-admin"
+            class="w-full max-w-md bg-zinc-900 border border-zinc-800 rounded-2xl p-6 sm:p-8 shadow-2xl relative hidden"
+        >
+            <!-- Botón Cerrar Sesión -->
+            <button
+                id="btn-logout"
+                class="absolute top-4 right-4 text-xs font-semibold text-zinc-400 hover:text-rose-400 transition-colors flex items-center gap-1 bg-zinc-950 px-3 py-1.5 rounded-lg border border-zinc-800"
+            >
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                    />
+                </svg>
+                Salir
+            </button>
+
+            <div class="mb-6 text-center">
+                <div
+                    class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] mb-3 shadow-lg shadow-logo-fucsia/20"
+                >
+                    <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
+                        />
+                    </svg>
+                </div>
+                <h1 class="text-xl font-bold text-white">Actualizar Instagram Reel</h1>
+                <p class="text-xs text-zinc-400 mt-1">Pegá la URL del Reel y subí la imagen de portada.</p>
+            </div>
+
+            <form id="form-reel" class="space-y-4">
+                <div>
+                    <label
+                        for="reel-url"
+                        class="block text-xs font-semibold uppercase tracking-wider text-zinc-300 mb-2"
+                    >
+                        URL del Reel o Publicación
+                    </label>
+                    <input
+                        type="text"
+                        id="reel-url"
+                        placeholder="https://www.instagram.com/reel/Cxxxxxx/..."
+                        required
+                        class="w-full px-4 py-3 bg-zinc-950 border border-zinc-800 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-logo-fucsia focus:border-transparent transition-all placeholder:text-zinc-600"
+                    />
+                </div>
+
+                <div>
+                    <label
+                        for="reel-image"
+                        class="block text-xs font-semibold uppercase tracking-wider text-zinc-300 mb-2"
+                    >
+                        Imagen de Portada (JPG / PNG / WEBP)
+                    </label>
+                    <input
+                        type="file"
+                        id="reel-image"
+                        accept="image/*"
+                        required
+                        class="w-full text-xs text-zinc-400 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-zinc-800 file:text-white hover:file:bg-zinc-700 cursor-pointer bg-zinc-950 border border-zinc-800 rounded-xl p-1.5 focus:outline-none"
+                    />
+                </div>
+
+                <!-- Previsualización opcional de la imagen seleccionada -->
+                <div id="preview-container" class="hidden text-center">
+                    <p class="text-[10px] text-zinc-400 mb-2">Vista previa de portada:</p>
+                    <img
+                        id="image-preview"
+                        src=""
+                        alt="Previsualización"
+                        class="w-28 h-36 object-cover mx-auto rounded-lg border border-zinc-700 shadow-md"
+                    />
+                </div>
+
+                <button
+                    type="submit"
+                    id="btn-guardar-reel"
+                    class="w-full py-3 px-4 bg-gradient-to-r from-logo-fucsia to-logo-cian font-semibold text-sm rounded-xl text-white hover:opacity-90 transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-zinc-900 focus:ring-logo-fucsia flex items-center justify-center gap-2 shadow-lg shadow-logo-fucsia/25"
+                >
+                    <span id="btn-text">Guardar Cambios</span>
+                </button>
+            </form>
+
+            <div id="mensaje-feedback" class="mt-4 p-3 rounded-xl text-xs text-center font-medium hidden"></div>
+        </main>
+
+        <!-- SDKs Compat de Firebase (Agregado auth) -->
+        <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
+
+        <script>
+            const firebaseConfig = {
+                apiKey: 'AIzaSyCTEKHrjvi-rZKuV7F6uF8144Oiz8kC-Xs',
+                authDomain: 'epa-studio-web.firebaseapp.com',
+                projectId: 'epa-studio-web',
+                storageBucket: 'epa-studio-web.firebasestorage.app',
+                messagingSenderId: '532664420233',
+                appId: '1:532664420233:web:fafb06c49b5ba2ca2c8358',
+            };
+
+            if (!firebase.apps.length) {
+                firebase.initializeApp(firebaseConfig);
+            }
+            const auth = firebase.auth();
+            const db = firebase.firestore();
+            const storage = firebase.storage();
+
+            // Elementos Secciones
+            const seccionLogin = document.getElementById('seccion-login');
+            const seccionAdmin = document.getElementById('seccion-admin');
+
+            // Elementos Login
+            const formLogin = document.getElementById('form-login');
+            const loginEmail = document.getElementById('login-email');
+            const loginPassword = document.getElementById('login-password');
+            const btnLogin = document.getElementById('btn-login');
+            const btnLoginText = document.getElementById('btn-login-text');
+            const mensajeLoginError = document.getElementById('mensaje-login-error');
+            const btnLogout = document.getElementById('btn-logout');
+
+            // Elementos Panel Admin Original
+            const form = document.getElementById('form-reel');
+            const btnGuardar = document.getElementById('btn-guardar-reel');
+            const btnText = document.getElementById('btn-text');
+            const urlInput = document.getElementById('reel-url');
+            const fileInput = document.getElementById('reel-image');
+            const previewContainer = document.getElementById('preview-container');
+            const imagePreview = document.getElementById('image-preview');
+
+            // 1. Control de Estado de Autenticación
+            auth.onAuthStateChanged((user) => {
+                if (user) {
+                    seccionLogin.classList.add('hidden');
+                    seccionAdmin.classList.remove('hidden');
+                } else {
+                    seccionLogin.classList.remove('hidden');
+                    seccionAdmin.classList.add('hidden');
+                }
+            });
+
+            // 2. Evento Login
+            formLogin.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                mensajeLoginError.classList.add('hidden');
+                mensajeLoginError.innerText = '';
+
+                btnLogin.disabled = true;
+                btnLogin.classList.add('opacity-50', 'cursor-not-allowed');
+                btnLoginText.innerText = 'Verificando...';
+
+                try {
+                    await auth.signInWithEmailAndPassword(loginEmail.value.trim(), loginPassword.value);
+                    loginEmail.value = '';
+                    loginPassword.value = '';
+                } catch (error) {
+                    console.error('Error al iniciar sesión:', error);
+                    mensajeLoginError.classList.remove('hidden');
+                    if (
+                        error.code === 'auth/invalid-credential' ||
+                        error.code === 'auth/wrong-password' ||
+                        error.code === 'auth/user-not-found'
+                    ) {
+                        mensajeLoginError.innerText = 'Correo o contraseña incorrectos.';
+                    } else if (error.code === 'auth/too-many-requests') {
+                        mensajeLoginError.innerText = 'Demasiados intentos fallidos. Intentá más tarde.';
+                    } else {
+                        mensajeLoginError.innerText = 'Error al iniciar sesión. Verificá los datos.';
+                    }
+                } finally {
+                    btnLogin.disabled = false;
+                    btnLogin.classList.remove('opacity-50', 'cursor-not-allowed');
+                    btnLoginText.innerText = 'Ingresar al Panel';
+                }
+            });
+
+            // 3. Evento Cerrar Sesión
+            btnLogout.addEventListener('click', () => {
+                auth.signOut();
+            });
+
+            // Previsualización de imagen al seleccionar
+            fileInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        imagePreview.src = event.target.result;
+                        previewContainer.classList.remove('hidden');
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    previewContainer.classList.add('hidden');
+                }
+            });
+
+            function mostrarMensaje(texto, esExito) {
+                const feedback = document.getElementById('mensaje-feedback');
+                feedback.innerText = texto;
+                feedback.className = 'mt-4 p-3 rounded-xl text-xs text-center font-medium';
+
+                if (esExito) {
+                    feedback.className += ' bg-emerald-500/10 text-emerald-400 border border-emerald-500/20';
+                } else {
+                    feedback.className += ' bg-rose-500/10 text-rose-400 border border-rose-500/20';
+                }
+
+                setTimeout(() => {
+                    feedback.className += ' hidden';
+                }, 5000);
+            }
+
+            function obtenerReelInfo(inputUrl) {
+                if (!inputUrl) return null;
+                try {
+                    let urlString = inputUrl.trim();
+                    if (!urlString.startsWith('http://') && !urlString.startsWith('https://')) {
+                        urlString = 'https://' + urlString;
+                    }
+
+                    const parsed = new URL(urlString);
+                    const segmentos = parsed.pathname.split('/').filter(Boolean);
+
+                    let reelId = null;
+
+                    for (let i = 0; i < segmentos.length; i++) {
+                        const seg = segmentos[i].toLowerCase();
+                        if (['p', 'reel', 'reels', 'tv', 'share'].includes(seg)) {
+                            const posibleId = segmentos[i + 1];
+                            if (posibleId && posibleId.length >= 9) {
+                                reelId = posibleId;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (!reelId && segmentos.length > 0) {
+                        const ultimo = segmentos[segmentos.length - 1];
+                        if (ultimo.length >= 9 && ultimo.length <= 15) {
+                            reelId = ultimo;
+                        }
+                    }
+
+                    if (reelId) {
+                        return {
+                            reelId: reelId,
+                            reelUrl: `https://www.instagram.com/reel/${reelId}/`,
+                        };
+                    }
+                } catch (err) {
+                    console.error('Error parseando URL:', err);
+                }
+                return null;
+            }
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const rawUrl = urlInput.value;
+                const infoReel = obtenerReelInfo(rawUrl);
+                const file = fileInput.files[0];
+
+                if (!infoReel || !infoReel.reelId) {
+                    mostrarMensaje('Por favor, ingresá un enlace válido de Instagram.', false);
+                    return;
+                }
+
+                if (!file) {
+                    mostrarMensaje('Por favor, seleccioná una imagen de portada.', false);
+                    return;
+                }
+
+                btnGuardar.disabled = true;
+                btnGuardar.classList.add('opacity-50', 'cursor-not-allowed');
+                btnText.innerText = 'Subiendo portada...';
+
+                try {
+                    // 1. Subir la imagen a Firebase Storage
+                    const fileExtension = file.name.split('.').pop();
+                    const storageRef = storage.ref(`instagram_covers/portada_reel.${fileExtension}`);
+                    await storageRef.put(file);
+
+                    // 2. Obtener la URL pública alojada en Firebase
+                    const coverUrl = await storageRef.getDownloadURL();
+
+                    btnText.innerText = 'Guardando en Base de Datos...';
+
+                    // 3. Guardar todo en Firestore
+                    await db.collection('config').doc('instagram').set({
+                        reelId: infoReel.reelId,
+                        reelUrl: infoReel.reelUrl,
+                        coverUrl: coverUrl,
+                        updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    });
+
+                    mostrarMensaje('¡Reel y portada subida correctamente!', true);
+                    urlInput.value = '';
+                    fileInput.value = '';
+                    previewContainer.classList.add('hidden');
+                } catch (error) {
+                    console.error('Error al guardar:', error);
+                    mostrarMensaje('Ocurrió un error al subir la imagen o guardar los datos.', false);
+                } finally {
+                    btnGuardar.disabled = false;
+                    btnGuardar.classList.remove('opacity-50', 'cursor-not-allowed');
+                    btnText.innerText = 'Guardar Cambios';
+                }
+            });
+        </script>
+    </body>
+</html>
