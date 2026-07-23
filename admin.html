@@ -22,7 +22,7 @@
         <!-- PANTALLA DE LOGIN -->
         <main
             id="seccion-login"
-            class="w-full max-w-md bg-zinc-900 border border-zinc-800 rounded-2xl p-6 sm:p-8 shadow-2xl relative"
+            class="w-full max-w-md bg-zinc-900 border border-zinc-800 rounded-2xl p-6 sm:p-8 shadow-2xl relative hidden"
         >
             <div class="mb-6 text-center">
                 <div
@@ -89,12 +89,11 @@
             ></div>
         </main>
 
-        <!-- PANEL DE ADMINISTRACIÓN (Tus componentes originales intactos) -->
+        <!-- PANEL DE ADMINISTRACIÓN -->
         <main
             id="seccion-admin"
-            class="w-full max-w-md bg-zinc-900 border border-zinc-800 rounded-2xl p-6 sm:p-8 shadow-2xl relative hidden"
+            class="w-full max-w-lg bg-zinc-900 border border-zinc-800 rounded-2xl p-6 sm:p-8 shadow-2xl relative hidden"
         >
-            <!-- Botón Cerrar Sesión -->
             <button
                 id="btn-logout"
                 class="absolute top-4 right-4 text-xs font-semibold text-zinc-400 hover:text-rose-400 transition-colors flex items-center gap-1 bg-zinc-950 px-3 py-1.5 rounded-lg border border-zinc-800"
@@ -114,28 +113,56 @@
                 <div
                     class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] mb-3 shadow-lg shadow-logo-fucsia/20"
                 >
-                    <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path
-                            d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 012.828 0L20 4.828a2 2 0 010 2.828l-8.586 8.586a2 2 0 01-.707.393l-3.328 1.109a1 1 0 01-1.243-1.243l1.109-3.328a2 2 0 01.393-.707L16.586 2.586z"
                         />
                     </svg>
                 </div>
-                <h1 class="text-xl font-bold text-white">Actualizar Instagram Reel</h1>
-                <p class="text-xs text-zinc-400 mt-1">Pegá la URL del Reel y subí la imagen de portada.</p>
+                <h1 class="text-xl font-bold text-white">Gestión de Tarjetas</h1>
+                <p class="text-xs text-zinc-400 mt-1">Creá, modificá o eliminá tarjetas de tu sitio.</p>
             </div>
 
-            <form id="form-reel" class="space-y-4">
+            <form id="form-tarjeta" class="space-y-4">
+                <!-- Selector Dinámico + Botón "Nueva Tarjeta" -->
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <label
+                            for="select-tarjeta"
+                            class="block text-xs font-semibold uppercase tracking-wider text-zinc-300"
+                        >
+                            Seleccionar Tarjeta
+                        </label>
+                        <button
+                            type="button"
+                            id="btn-nueva-tarjeta"
+                            class="text-xs font-semibold text-logo-cian hover:underline"
+                        >
+                            + Crear Nueva
+                        </button>
+                    </div>
+                    <select
+                        id="select-tarjeta"
+                        class="w-full px-4 py-3 bg-zinc-950 border border-zinc-800 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-logo-fucsia focus:border-transparent transition-all cursor-pointer"
+                    >
+                        <option value="">Cargando tarjetas...</option>
+                    </select>
+                </div>
+
                 <div>
                     <label
-                        for="reel-url"
+                        for="tarjeta-span"
                         class="block text-xs font-semibold uppercase tracking-wider text-zinc-300 mb-2"
                     >
-                        URL del Reel o Publicación
+                        Etiqueta / Subtítulo (&lt;span&gt;)
                     </label>
                     <input
                         type="text"
-                        id="reel-url"
-                        placeholder="https://www.instagram.com/reel/Cxxxxxx/..."
+                        id="tarjeta-span"
+                        placeholder="Ej: Desarrollo Web"
                         required
                         class="w-full px-4 py-3 bg-zinc-950 border border-zinc-800 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-logo-fucsia focus:border-transparent transition-all placeholder:text-zinc-600"
                     />
@@ -143,48 +170,79 @@
 
                 <div>
                     <label
-                        for="reel-image"
+                        for="tarjeta-h3"
                         class="block text-xs font-semibold uppercase tracking-wider text-zinc-300 mb-2"
                     >
-                        Imagen de Portada (JPG / PNG / WEBP)
+                        Título Principal (&lt;h3&gt;)
                     </label>
                     <input
-                        type="file"
-                        id="reel-image"
-                        accept="image/*"
+                        type="text"
+                        id="tarjeta-h3"
+                        placeholder="Ej: Sitios E-commerce a Medida"
                         required
-                        class="w-full text-xs text-zinc-400 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-zinc-800 file:text-white hover:file:bg-zinc-700 cursor-pointer bg-zinc-950 border border-zinc-800 rounded-xl p-1.5 focus:outline-none"
+                        class="w-full px-4 py-3 bg-zinc-950 border border-zinc-800 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-logo-fucsia focus:border-transparent transition-all placeholder:text-zinc-600"
                     />
                 </div>
 
-                <!-- Previsualización opcional de la imagen seleccionada -->
-                <div id="preview-container" class="hidden text-center">
-                    <p class="text-[10px] text-zinc-400 mb-2">Vista previa de portada:</p>
-                    <img
-                        id="image-preview"
-                        src=""
-                        alt="Previsualización"
-                        class="w-28 h-36 object-cover mx-auto rounded-lg border border-zinc-700 shadow-md"
+                <div>
+                    <label
+                        for="tarjeta-p"
+                        class="block text-xs font-semibold uppercase tracking-wider text-zinc-300 mb-2"
+                    >
+                        Descripción (&lt;p&gt;)
+                    </label>
+                    <textarea
+                        id="tarjeta-p"
+                        rows="3"
+                        placeholder="Escribí aquí la descripción..."
+                        required
+                        class="w-full px-4 py-3 bg-zinc-950 border border-zinc-800 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-logo-fucsia focus:border-transparent transition-all placeholder:text-zinc-600 resize-none"
+                    ></textarea>
+                </div>
+
+                <!-- CAMPO NUEVO: Red Social / Enlace -->
+                <div>
+                    <label
+                        for="tarjeta-link"
+                        class="block text-xs font-semibold uppercase tracking-wider text-zinc-300 mb-2"
+                    >
+                        Enlace / Red Social (&lt;a href="..."&gt;)
+                    </label>
+                    <input
+                        type="url"
+                        id="tarjeta-link"
+                        placeholder="https://instagram.com/tu_usuario"
+                        required
+                        class="w-full px-4 py-3 bg-zinc-950 border border-zinc-800 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-logo-fucsia focus:border-transparent transition-all placeholder:text-zinc-600"
                     />
                 </div>
 
-                <button
-                    type="submit"
-                    id="btn-guardar-reel"
-                    class="w-full py-3 px-4 bg-gradient-to-r from-logo-fucsia to-logo-cian font-semibold text-sm rounded-xl text-white hover:opacity-90 transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-zinc-900 focus:ring-logo-fucsia flex items-center justify-center gap-2 shadow-lg shadow-logo-fucsia/25"
-                >
-                    <span id="btn-text">Guardar Cambios</span>
-                </button>
+                <div class="flex gap-3 pt-2">
+                    <button
+                        type="submit"
+                        id="btn-guardar-tarjeta"
+                        class="flex-1 py-3 px-4 bg-gradient-to-r from-logo-fucsia to-logo-cian font-semibold text-sm rounded-xl text-white hover:opacity-90 transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-zinc-900 focus:ring-logo-fucsia flex items-center justify-center gap-2 shadow-lg shadow-logo-fucsia/25"
+                    >
+                        <span id="btn-text">Guardar Tarjeta</span>
+                    </button>
+
+                    <button
+                        type="button"
+                        id="btn-eliminar-tarjeta"
+                        class="py-3 px-4 bg-rose-600/20 text-rose-400 border border-rose-500/30 hover:bg-rose-600/30 font-semibold text-sm rounded-xl transition-all focus:outline-none hidden"
+                    >
+                        Eliminar
+                    </button>
+                </div>
             </form>
 
             <div id="mensaje-feedback" class="mt-4 p-3 rounded-xl text-xs text-center font-medium hidden"></div>
         </main>
 
-        <!-- SDKs Compat de Firebase (Agregado auth) -->
+        <!-- Firebase SDKs -->
         <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
         <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
         <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
 
         <script>
             const firebaseConfig = {
@@ -201,13 +259,10 @@
             }
             const auth = firebase.auth();
             const db = firebase.firestore();
-            const storage = firebase.storage();
 
-            // Elementos Secciones
             const seccionLogin = document.getElementById('seccion-login');
             const seccionAdmin = document.getElementById('seccion-admin');
 
-            // Elementos Login
             const formLogin = document.getElementById('form-login');
             const loginEmail = document.getElementById('login-email');
             const loginPassword = document.getElementById('login-password');
@@ -216,34 +271,39 @@
             const mensajeLoginError = document.getElementById('mensaje-login-error');
             const btnLogout = document.getElementById('btn-logout');
 
-            // Elementos Panel Admin Original
-            const form = document.getElementById('form-reel');
-            const btnGuardar = document.getElementById('btn-guardar-reel');
+            const formTarjeta = document.getElementById('form-tarjeta');
+            const selectTarjeta = document.getElementById('select-tarjeta');
+            const btnNuevaTarjeta = document.getElementById('btn-nueva-tarjeta');
+            const inputSpan = document.getElementById('tarjeta-span');
+            const inputH3 = document.getElementById('tarjeta-h3');
+            const inputP = document.getElementById('tarjeta-p');
+            const inputLink = document.getElementById('tarjeta-link');
+            const btnGuardarTarjeta = document.getElementById('btn-guardar-tarjeta');
+            const btnEliminarTarjeta = document.getElementById('btn-eliminar-tarjeta');
             const btnText = document.getElementById('btn-text');
-            const urlInput = document.getElementById('reel-url');
-            const fileInput = document.getElementById('reel-image');
-            const previewContainer = document.getElementById('preview-container');
-            const imagePreview = document.getElementById('image-preview');
 
-            // 1. Control de Estado de Autenticación
+            let timerFeedback = null;
+            let tarjetasCache = [];
+            let idTarjetaSeleccionada = null;
+
+            // 1. Manejo de Auth
             auth.onAuthStateChanged((user) => {
                 if (user) {
                     seccionLogin.classList.add('hidden');
                     seccionAdmin.classList.remove('hidden');
+                    cargarListaTarjetas();
                 } else {
                     seccionLogin.classList.remove('hidden');
                     seccionAdmin.classList.add('hidden');
                 }
             });
 
-            // 2. Evento Login
+            // 2. Submit Login
             formLogin.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 mensajeLoginError.classList.add('hidden');
-                mensajeLoginError.innerText = '';
-
                 btnLogin.disabled = true;
-                btnLogin.classList.add('opacity-50', 'cursor-not-allowed');
+                btnLogin.classList.add('opacity-50');
                 btnLoginText.innerText = 'Verificando...';
 
                 try {
@@ -251,158 +311,164 @@
                     loginEmail.value = '';
                     loginPassword.value = '';
                 } catch (error) {
-                    console.error('Error al iniciar sesión:', error);
                     mensajeLoginError.classList.remove('hidden');
-                    if (
-                        error.code === 'auth/invalid-credential' ||
-                        error.code === 'auth/wrong-password' ||
-                        error.code === 'auth/user-not-found'
-                    ) {
-                        mensajeLoginError.innerText = 'Correo o contraseña incorrectos.';
-                    } else if (error.code === 'auth/too-many-requests') {
-                        mensajeLoginError.innerText = 'Demasiados intentos fallidos. Intentá más tarde.';
-                    } else {
-                        mensajeLoginError.innerText = 'Error al iniciar sesión. Verificá los datos.';
-                    }
+                    mensajeLoginError.innerText = 'Credenciales incorrectas o error de conexión.';
                 } finally {
                     btnLogin.disabled = false;
-                    btnLogin.classList.remove('opacity-50', 'cursor-not-allowed');
+                    btnLogin.classList.remove('opacity-50');
                     btnLoginText.innerText = 'Ingresar al Panel';
                 }
             });
 
-            // 3. Evento Cerrar Sesión
-            btnLogout.addEventListener('click', () => {
-                auth.signOut();
-            });
+            // 3. Logout
+            btnLogout.addEventListener('click', () => auth.signOut());
 
-            // Previsualización de imagen al seleccionar
-            fileInput.addEventListener('change', (e) => {
-                const file = e.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = (event) => {
-                        imagePreview.src = event.target.result;
-                        previewContainer.classList.remove('hidden');
-                    };
-                    reader.readAsDataURL(file);
-                } else {
-                    previewContainer.classList.add('hidden');
-                }
-            });
-
-            function mostrarMensaje(texto, esExito) {
-                const feedback = document.getElementById('mensaje-feedback');
-                feedback.innerText = texto;
-                feedback.className = 'mt-4 p-3 rounded-xl text-xs text-center font-medium';
-
-                if (esExito) {
-                    feedback.className += ' bg-emerald-500/10 text-emerald-400 border border-emerald-500/20';
-                } else {
-                    feedback.className += ' bg-rose-500/10 text-rose-400 border border-rose-500/20';
-                }
-
-                setTimeout(() => {
-                    feedback.className += ' hidden';
-                }, 5000);
-            }
-
-            function obtenerReelInfo(inputUrl) {
-                if (!inputUrl) return null;
+            // 4. Cargar lista dinámica de tarjetas desde Firestore
+            async function cargarListaTarjetas(idASeleccionar = null) {
                 try {
-                    let urlString = inputUrl.trim();
-                    if (!urlString.startsWith('http://') && !urlString.startsWith('https://')) {
-                        urlString = 'https://' + urlString;
+                    const snapshot = await db.collection('tarjetas').orderBy('createdAt', 'asc').get();
+                    tarjetasCache = [];
+                    selectTarjeta.innerHTML = '';
+
+                    if (snapshot.empty) {
+                        selectTarjeta.innerHTML = '<option value="">Sin tarjetas creadas</option>';
+                        prepararModoCreacion();
+                        return;
                     }
 
-                    const parsed = new URL(urlString);
-                    const segmentos = parsed.pathname.split('/').filter(Boolean);
+                    snapshot.forEach((doc) => {
+                        const data = doc.data();
+                        tarjetasCache.push({ id: doc.id, ...data });
 
-                    let reelId = null;
-
-                    for (let i = 0; i < segmentos.length; i++) {
-                        const seg = segmentos[i].toLowerCase();
-                        if (['p', 'reel', 'reels', 'tv', 'share'].includes(seg)) {
-                            const posibleId = segmentos[i + 1];
-                            if (posibleId && posibleId.length >= 9) {
-                                reelId = posibleId;
-                                break;
-                            }
-                        }
-                    }
-
-                    if (!reelId && segmentos.length > 0) {
-                        const ultimo = segmentos[segmentos.length - 1];
-                        if (ultimo.length >= 9 && ultimo.length <= 15) {
-                            reelId = ultimo;
-                        }
-                    }
-
-                    if (reelId) {
-                        return {
-                            reelId: reelId,
-                            reelUrl: `https://www.instagram.com/reel/${reelId}/`,
-                        };
-                    }
-                } catch (err) {
-                    console.error('Error parseando URL:', err);
-                }
-                return null;
-            }
-
-            form.addEventListener('submit', async (e) => {
-                e.preventDefault();
-
-                const rawUrl = urlInput.value;
-                const infoReel = obtenerReelInfo(rawUrl);
-                const file = fileInput.files[0];
-
-                if (!infoReel || !infoReel.reelId) {
-                    mostrarMensaje('Por favor, ingresá un enlace válido de Instagram.', false);
-                    return;
-                }
-
-                if (!file) {
-                    mostrarMensaje('Por favor, seleccioná una imagen de portada.', false);
-                    return;
-                }
-
-                btnGuardar.disabled = true;
-                btnGuardar.classList.add('opacity-50', 'cursor-not-allowed');
-                btnText.innerText = 'Subiendo portada...';
-
-                try {
-                    // 1. Subir la imagen a Firebase Storage
-                    const fileExtension = file.name.split('.').pop();
-                    const storageRef = storage.ref(`instagram_covers/portada_reel.${fileExtension}`);
-                    await storageRef.put(file);
-
-                    // 2. Obtener la URL pública alojada en Firebase
-                    const coverUrl = await storageRef.getDownloadURL();
-
-                    btnText.innerText = 'Guardando en Base de Datos...';
-
-                    // 3. Guardar todo en Firestore
-                    await db.collection('config').doc('instagram').set({
-                        reelId: infoReel.reelId,
-                        reelUrl: infoReel.reelUrl,
-                        coverUrl: coverUrl,
-                        updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                        const option = document.createElement('option');
+                        option.value = doc.id;
+                        option.textContent = data.h3 ? data.h3 : `Tarjeta (${doc.id.substring(0, 5)})`;
+                        selectTarjeta.appendChild(option);
                     });
 
-                    mostrarMensaje('¡Reel y portada subida correctamente!', true);
-                    urlInput.value = '';
-                    fileInput.value = '';
-                    previewContainer.classList.add('hidden');
+                    const targetId = idASeleccionar || tarjetasCache[0].id;
+                    selectTarjeta.value = targetId;
+                    seleccionarTarjeta(targetId);
                 } catch (error) {
-                    console.error('Error al guardar:', error);
-                    mostrarMensaje('Ocurrió un error al subir la imagen o guardar los datos.', false);
+                    console.error('Error al cargar lista de tarjetas:', error);
+                    mostrarMensaje('Error al obtener la lista de tarjetas.', false);
+                }
+            }
+
+            // 5. Seleccionar Tarjeta para editar
+            function seleccionarTarjeta(id) {
+                idTarjetaSeleccionada = id;
+                const tarjeta = tarjetasCache.find((t) => t.id === id);
+
+                if (tarjeta) {
+                    inputSpan.value = tarjeta.span || '';
+                    inputH3.value = tarjeta.h3 || '';
+                    inputP.value = tarjeta.p || '';
+                    inputLink.value = tarjeta.link || '';
+                    btnText.innerText = 'Actualizar Tarjeta';
+                    btnEliminarTarjeta.classList.remove('hidden');
+                }
+            }
+
+            selectTarjeta.addEventListener('change', (e) => {
+                if (e.target.value) seleccionarTarjeta(e.target.value);
+            });
+
+            // 6. Preparar Modo Creación (Limpiar campos)
+            function prepararModoCreacion() {
+                idTarjetaSeleccionada = null;
+                inputSpan.value = '';
+                inputH3.value = '';
+                inputP.value = '';
+                inputLink.value = '';
+                btnText.innerText = 'Crear Nueva Tarjeta';
+                btnEliminarTarjeta.classList.add('hidden');
+                inputSpan.focus();
+            }
+
+            btnNuevaTarjeta.addEventListener('click', prepararModoCreacion);
+
+            // 7. Guardar o Actualizar Tarjeta
+            formTarjeta.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const spanTexto = inputSpan.value.trim();
+                const h3Texto = inputH3.value.trim();
+                const pTexto = inputP.value.trim();
+                const linkTexto = inputLink.value.trim();
+
+                btnGuardarTarjeta.disabled = true;
+                btnGuardarTarjeta.classList.add('opacity-50');
+                btnText.innerText = 'Guardando...';
+
+                try {
+                    if (idTarjetaSeleccionada) {
+                        // ACTUALIZAR EXISTENTE
+                        await db.collection('tarjetas').doc(idTarjetaSeleccionada).update({
+                            span: spanTexto,
+                            h3: h3Texto,
+                            p: pTexto,
+                            link: linkTexto,
+                            updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                        });
+                        mostrarMensaje('¡Tarjeta actualizada con éxito!', true);
+                        await cargarListaTarjetas(idTarjetaSeleccionada);
+                    } else {
+                        // CREAR NUEVA
+                        const docRef = await db.collection('tarjetas').add({
+                            span: spanTexto,
+                            h3: h3Texto,
+                            p: pTexto,
+                            link: linkTexto,
+                            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                        });
+                        mostrarMensaje('¡Nueva tarjeta agregada con éxito!', true);
+                        await cargarListaTarjetas(docRef.id);
+                    }
+                } catch (error) {
+                    console.error('Error al guardar tarjeta:', error);
+                    mostrarMensaje('Ocurrió un error al intentar guardar.', false);
                 } finally {
-                    btnGuardar.disabled = false;
-                    btnGuardar.classList.remove('opacity-50', 'cursor-not-allowed');
-                    btnText.innerText = 'Guardar Cambios';
+                    btnGuardarTarjeta.disabled = false;
+                    btnGuardarTarjeta.classList.remove('opacity-50');
                 }
             });
+
+            // 8. Eliminar Tarjeta
+            btnEliminarTarjeta.addEventListener('click', async () => {
+                if (!idTarjetaSeleccionada) return;
+
+                const confirmar = confirm(
+                    '¿Estás seguro de que querés eliminar esta tarjeta? Esta acción no se puede deshacer.',
+                );
+                if (!confirmar) return;
+
+                try {
+                    await db.collection('tarjetas').doc(idTarjetaSeleccionada).delete();
+                    mostrarMensaje('Tarjeta eliminada correctamente.', true);
+                    await cargarListaTarjetas();
+                } catch (error) {
+                    console.error('Error al eliminar tarjeta:', error);
+                    mostrarMensaje('Error al eliminar la tarjeta.', false);
+                }
+            });
+
+            // 9. Feedback Helper
+            function mostrarMensaje(texto, esExito) {
+                const feedback = document.getElementById('mensaje-feedback');
+                if (timerFeedback) clearTimeout(timerFeedback);
+
+                feedback.innerText = texto;
+                feedback.className = `mt-4 p-3 rounded-xl text-xs text-center font-medium block ${
+                    esExito
+                        ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
+                        : 'bg-rose-500/10 text-rose-400 border border-rose-500/20'
+                }`;
+
+                timerFeedback = setTimeout(() => {
+                    feedback.classList.add('hidden');
+                }, 4000);
+            }
         </script>
     </body>
 </html>

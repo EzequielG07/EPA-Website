@@ -389,23 +389,6 @@ function cambiarIdioma(codigo) {
 }
 
 // ==========================================
-// 1. CONFIGURACIÓN E INICIALIZACIÓN FIREBASE
-// ==========================================
-const firebaseConfig = {
-    apiKey: 'AIzaSyCTEKHrjvi-rZKuV7F6uF8144Oiz8kC-Xs',
-    authDomain: 'epa-studio-web.firebaseapp.com',
-    projectId: 'epa-studio-web',
-    storageBucket: 'epa-studio-web.firebasestorage.app',
-    messagingSenderId: '532664420233',
-    appId: '1:532664420233:web:fafb06c49b5ba2ca2c8358',
-};
-
-if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-}
-const db = firebase.firestore();
-
-// ==========================================
 // 2. LECTURA EN TIEMPO REAL (INSTAGRAM REEL)
 // ==========================================
 // ==========================================
@@ -545,3 +528,178 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+//////todo---------------------------------------------------------------------------------
+
+// ==========================================
+// LECTURA Y ACTUALIZACIÓN DINÁMICA DE TARJETAS
+// ==========================================
+
+/**
+ * Función que escucha los cambios en Firestore para las 9 tarjetas
+ * y actualiza el HTML dinámicamente.
+ */
+function inicializarTarjetasDinamicas() {
+    // Aseguramos que Firebase Firestore esté inicializado en la ventana
+    if (typeof db === 'undefined') {
+        console.error('Firestore no está inicializado. Asegurate de cargar Firebase SDK antes de script.js');
+        return;
+    }
+
+    // Escuchar la colección 'tarjetas' en tiempo real
+    db.collection('tarjetas').onSnapshot(
+        (snapshot) => {
+            snapshot.forEach((doc) => {
+                const idTarjeta = doc.id; // Ej: "tarjeta-1"
+                const data = doc.data();
+
+                // Buscar el contenedor de la tarjeta en el DOM por su ID
+                const contenedorTarjeta = document.getElementById(idTarjeta);
+
+                if (contenedorTarjeta) {
+                    // Actualizar <span> (Etiqueta/Categoría)
+                    const elemSpan = contenedorTarjeta.querySelector('span');
+                    if (elemSpan && data.span !== undefined) {
+                        elemSpan.textContent = data.span;
+                    }
+
+                    // Actualizar <h3> (Título principal)
+                    const elemH3 = contenedorTarjeta.querySelector('h3');
+                    if (elemH3 && data.h3 !== undefined) {
+                        elemH3.textContent = data.h3;
+                    }
+
+                    // Actualizar <p> (Descripción)
+                    const elemP = contenedorTarjeta.querySelector('p');
+                    if (elemP && data.p !== undefined) {
+                        elemP.textContent = data.p;
+                    }
+                }
+            });
+        },
+        (error) => {
+            console.error('Error al escuchar cambios en las tarjetas:', error);
+        },
+    );
+}
+
+// Ejecutar la función cuando el DOM esté completamente cargado
+document.addEventListener('DOMContentLoaded', () => {
+    inicializarTarjetasDinamicas();
+});
+
+//todo----------------------------------------------------------------------------------------------------
+
+// ==========================================
+// CONFIGURACIÓN E INICIALIZACIÓN FIREBASE
+// ==========================================
+
+const firebaseConfig = {
+    apiKey: 'AIzaSyCTEKHrjvi-rZKuV7F6uF8144Oiz8kC-Xs',
+    authDomain: 'epa-studio-web.firebaseapp.com',
+    projectId: 'epa-studio-web',
+    storageBucket: 'epa-studio-web.firebasestorage.app',
+    messagingSenderId: '532664420233',
+    appId: '1:532664420233:web:fafb06c49b5ba2ca2c8358',
+};
+
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}
+const db = firebase.firestore();
+
+// ==========================================
+// RENDERIZADO DINÁMICO DE TARJETAS
+// ==========================================
+
+/**
+ * Crea el HTML de la tarjeta dinámicamente
+ */
+function crearTarjetaHTML(idDoc, data) {
+    // Normalizar la URL para asegurar protocolo https://
+    let urlDestino = data.link ? data.link.trim() : '';
+    if (urlDestino && !urlDestino.startsWith('http://') && !urlDestino.startsWith('https://')) {
+        urlDestino = `https://${urlDestino}`;
+    }
+
+    // Pie de la tarjeta: solo se incluye si el cliente guardó una URL
+    const seccionLink = urlDestino
+        ? `
+        <div class="mt-5 pt-4 border-t border-zinc-800/50 flex items-center justify-between">
+            <span class="text-xs text-zinc-500 font-medium">Ver más</span>
+            <a 
+                href="${urlDestino}" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-1.5 text-xs text-zinc-300 hover:text-logo-fucsia transition-colors font-medium group/link"
+                onclick="event.stopPropagation();" 
+            >
+                <span>Ir al enlace</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform">
+                    <path d="M7 17l9.2-9.2M17 17V8H8"/>
+                </svg>
+            </a>
+        </div>
+    `
+        : '';
+
+    return `
+        <div
+            id="${idDoc}"
+            class="w-[80%] sm:w-[60%] md:w-auto flex-shrink-0 snap-start group bg-zinc-950/60 border border-zinc-800/80 p-5 sm:p-6 rounded-xl hover:border-logo-fucsia/50 transition-all duration-300 relative overflow-hidden shadow-xl hover:shadow-logo-fucsia/5 cursor-pointer flex flex-col justify-between"
+        >
+            <div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-logo-fucsia to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+
+            <div>
+                <span class="text-xs text-logo-fucsia font-semibold uppercase tracking-wider block">
+                    ${data.span || 'General'}
+                </span>
+                <h3 class="text-xl font-bold text-white mt-2">
+                    ${data.h3 || 'Sin título'}
+                </h3>
+                <p class="text-zinc-400 text-sm mt-2 leading-relaxed">
+                    ${data.p || ''}
+                </p>
+            </div>
+
+            ${seccionLink}
+        </div>
+    `;
+}
+
+/**
+ * Escucha cambios en tiempo real en Firestore
+ */
+function cargarTarjetas() {
+    const contenedor = document.getElementById('contenedor-tarjetas');
+
+    if (!contenedor) {
+        console.error('No se encontró el elemento #contenedor-tarjetas en el DOM.');
+        return;
+    }
+
+    db.collection('tarjetas').onSnapshot(
+        (snapshot) => {
+            // Reemplaza la tarjeta de "Cargando..." por el contenido real
+            contenedor.innerHTML = '';
+
+            if (snapshot.empty) {
+                contenedor.innerHTML = `<p class="text-zinc-500 text-sm col-span-full">No hay tarjetas registradas.</p>`;
+                return;
+            }
+
+            snapshot.forEach((doc) => {
+                const data = doc.data();
+                const tarjetaHTML = crearTarjetaHTML(doc.id, data);
+                contenedor.insertAdjacentHTML('beforeend', tarjetaHTML);
+            });
+        },
+        (error) => {
+            console.error('Error al escuchar Firestore:', error);
+            contenedor.innerHTML = `<p class="text-red-400 text-sm col-span-full">Error al cargar el contenido.</p>`;
+        },
+    );
+}
+
+// Iniciar la escucha cuando el documento esté completamente cargado
+document.addEventListener('DOMContentLoaded', cargarTarjetas);
