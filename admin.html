@@ -123,7 +123,7 @@
                     </svg>
                 </div>
                 <h1 class="text-xl font-bold text-white">Gestión de Tarjetas</h1>
-                <p class="text-xs text-zinc-400 mt-1">Creá, modificá o eliminá tarjetas de tu sitio.</p>
+                <p class="text-xs text-zinc-400 mt-1">Creá, modificá o eliminá tarjetas del sitio.</p>
             </div>
 
             <form id="form-tarjeta" class="space-y-4">
@@ -157,7 +157,7 @@
                         for="tarjeta-span"
                         class="block text-xs font-semibold uppercase tracking-wider text-zinc-300 mb-2"
                     >
-                        Etiqueta / Subtítulo (&lt;span&gt;)
+                        Etiqueta / Subtítulo (Fucsia)
                     </label>
                     <input
                         type="text"
@@ -173,7 +173,7 @@
                         for="tarjeta-h3"
                         class="block text-xs font-semibold uppercase tracking-wider text-zinc-300 mb-2"
                     >
-                        Título Principal (&lt;h3&gt;)
+                        Título Principal (Nombre Tarjeta)
                     </label>
                     <input
                         type="text"
@@ -189,7 +189,7 @@
                         for="tarjeta-p"
                         class="block text-xs font-semibold uppercase tracking-wider text-zinc-300 mb-2"
                     >
-                        Descripción (&lt;p&gt;)
+                        Descripción
                     </label>
                     <textarea
                         id="tarjeta-p"
@@ -200,17 +200,17 @@
                     ></textarea>
                 </div>
 
-                <!-- CAMPO NUEVO: Red Social / Enlace -->
+                <!-- CAMPO: Sitio Web / Enlace -->
                 <div>
                     <label
-                        for="tarjeta-link"
+                        for="tarjeta-sitio-web"
                         class="block text-xs font-semibold uppercase tracking-wider text-zinc-300 mb-2"
                     >
-                        Enlace / Red Social (&lt;a href="..."&gt;)
+                        Sitio Web / Enlace
                     </label>
                     <input
                         type="url"
-                        id="tarjeta-link"
+                        id="tarjeta-sitio-web"
                         placeholder="https://instagram.com/tu_usuario"
                         required
                         class="w-full px-4 py-3 bg-zinc-950 border border-zinc-800 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-logo-fucsia focus:border-transparent transition-all placeholder:text-zinc-600"
@@ -277,7 +277,7 @@
             const inputSpan = document.getElementById('tarjeta-span');
             const inputH3 = document.getElementById('tarjeta-h3');
             const inputP = document.getElementById('tarjeta-p');
-            const inputLink = document.getElementById('tarjeta-link');
+            const inputSitioWeb = document.getElementById('tarjeta-sitio-web');
             const btnGuardarTarjeta = document.getElementById('btn-guardar-tarjeta');
             const btnEliminarTarjeta = document.getElementById('btn-eliminar-tarjeta');
             const btnText = document.getElementById('btn-text');
@@ -291,7 +291,7 @@
                 if (user) {
                     seccionLogin.classList.add('hidden');
                     seccionAdmin.classList.remove('hidden');
-                    cargarListaTarjetas();
+                    cargarListaTarjetas(); // Carga limpiando la selección
                 } else {
                     seccionLogin.classList.remove('hidden');
                     seccionAdmin.classList.add('hidden');
@@ -336,6 +336,12 @@
                         return;
                     }
 
+                    // Opción neutra por defecto
+                    const defaultOption = document.createElement('option');
+                    defaultOption.value = '';
+                    defaultOption.textContent = '-- Seleccionar una tarjeta --';
+                    selectTarjeta.appendChild(defaultOption);
+
                     snapshot.forEach((doc) => {
                         const data = doc.data();
                         tarjetasCache.push({ id: doc.id, ...data });
@@ -346,9 +352,14 @@
                         selectTarjeta.appendChild(option);
                     });
 
-                    const targetId = idASeleccionar || tarjetasCache[0].id;
-                    selectTarjeta.value = targetId;
-                    seleccionarTarjeta(targetId);
+                    if (idASeleccionar) {
+                        selectTarjeta.value = idASeleccionar;
+                        seleccionarTarjeta(idASeleccionar);
+                    } else {
+                        // No seleccionar ninguna por defecto y limpiar formulario
+                        selectTarjeta.value = '';
+                        prepararModoCreacion();
+                    }
                 } catch (error) {
                     console.error('Error al cargar lista de tarjetas:', error);
                     mostrarMensaje('Error al obtener la lista de tarjetas.', false);
@@ -357,6 +368,11 @@
 
             // 5. Seleccionar Tarjeta para editar
             function seleccionarTarjeta(id) {
+                if (!id) {
+                    prepararModoCreacion();
+                    return;
+                }
+
                 idTarjetaSeleccionada = id;
                 const tarjeta = tarjetasCache.find((t) => t.id === id);
 
@@ -364,29 +380,32 @@
                     inputSpan.value = tarjeta.span || '';
                     inputH3.value = tarjeta.h3 || '';
                     inputP.value = tarjeta.p || '';
-                    inputLink.value = tarjeta.link || '';
+                    inputSitioWeb.value = tarjeta.sitio_web || tarjeta.link || '';
                     btnText.innerText = 'Actualizar Tarjeta';
                     btnEliminarTarjeta.classList.remove('hidden');
                 }
             }
 
             selectTarjeta.addEventListener('change', (e) => {
-                if (e.target.value) seleccionarTarjeta(e.target.value);
+                seleccionarTarjeta(e.target.value);
             });
 
             // 6. Preparar Modo Creación (Limpiar campos)
             function prepararModoCreacion() {
                 idTarjetaSeleccionada = null;
+                selectTarjeta.value = '';
                 inputSpan.value = '';
                 inputH3.value = '';
                 inputP.value = '';
-                inputLink.value = '';
+                inputSitioWeb.value = '';
                 btnText.innerText = 'Crear Nueva Tarjeta';
                 btnEliminarTarjeta.classList.add('hidden');
-                inputSpan.focus();
             }
 
-            btnNuevaTarjeta.addEventListener('click', prepararModoCreacion);
+            btnNuevaTarjeta.addEventListener('click', () => {
+                prepararModoCreacion();
+                inputSpan.focus();
+            });
 
             // 7. Guardar o Actualizar Tarjeta
             formTarjeta.addEventListener('submit', async (e) => {
@@ -395,7 +414,7 @@
                 const spanTexto = inputSpan.value.trim();
                 const h3Texto = inputH3.value.trim();
                 const pTexto = inputP.value.trim();
-                const linkTexto = inputLink.value.trim();
+                const sitioWebTexto = inputSitioWeb.value.trim();
 
                 btnGuardarTarjeta.disabled = true;
                 btnGuardarTarjeta.classList.add('opacity-50');
@@ -408,22 +427,24 @@
                             span: spanTexto,
                             h3: h3Texto,
                             p: pTexto,
-                            link: linkTexto,
+                            sitio_web: sitioWebTexto,
                             updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
                         });
                         mostrarMensaje('¡Tarjeta actualizada con éxito!', true);
+                        // Recargar manteniendo en edición la tarjeta recién actualizada
                         await cargarListaTarjetas(idTarjetaSeleccionada);
                     } else {
                         // CREAR NUEVA
-                        const docRef = await db.collection('tarjetas').add({
+                        await db.collection('tarjetas').add({
                             span: spanTexto,
                             h3: h3Texto,
                             p: pTexto,
-                            link: linkTexto,
+                            sitio_web: sitioWebTexto,
                             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                         });
                         mostrarMensaje('¡Nueva tarjeta agregada con éxito!', true);
-                        await cargarListaTarjetas(docRef.id);
+                        // Recargar lista dejando el selector en blanco (modo creación)
+                        await cargarListaTarjetas(null);
                     }
                 } catch (error) {
                     console.error('Error al guardar tarjeta:', error);
@@ -446,7 +467,7 @@
                 try {
                     await db.collection('tarjetas').doc(idTarjetaSeleccionada).delete();
                     mostrarMensaje('Tarjeta eliminada correctamente.', true);
-                    await cargarListaTarjetas();
+                    await cargarListaTarjetas(null); // Limpia selección al eliminar
                 } catch (error) {
                     console.error('Error al eliminar tarjeta:', error);
                     mostrarMensaje('Error al eliminar la tarjeta.', false);

@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function initFormulario() {
-    // 1. Referencias de los elementos del DOM (Buscadas en fresco)
+    // 1. Referencias de los elementos del DOM
     const form = document.querySelector('form');
     const toggleServicesBtn = document.getElementById('toggle-services-btn');
     const servicesDropdown = document.getElementById('services-dropdown');
@@ -17,6 +17,8 @@ function initFormulario() {
     const celularInput = document.getElementById('celular');
     const emailInput = document.getElementById('email');
     const comentarioInput = document.getElementById('comentario');
+
+    if (!form) return;
 
     // Respaldo de la estructura HTML interna del formulario para el reinicio
     const estructuraOriginalForm = form.innerHTML;
@@ -37,9 +39,14 @@ function initFormulario() {
     };
 
     const closeDropdownOnClickAway = (e) => {
-        if (!toggleServicesBtn.contains(e.target) && !servicesDropdown.contains(e.target)) {
+        if (
+            toggleServicesBtn &&
+            servicesDropdown &&
+            !toggleServicesBtn.contains(e.target) &&
+            !servicesDropdown.contains(e.target)
+        ) {
             servicesDropdown.classList.add('hidden');
-            toggleIcon.classList.remove('rotate-180');
+            if (toggleIcon) toggleIcon.classList.remove('rotate-180');
         }
     };
 
@@ -91,11 +98,10 @@ function initFormulario() {
         }
     };
 
-    // Asignación de eventos de interfaz
-    toggleServicesBtn.addEventListener('click', toggleDropdown);
+    if (toggleServicesBtn) toggleServicesBtn.addEventListener('click', toggleDropdown);
     document.addEventListener('click', closeDropdownOnClickAway);
     checkboxes.forEach((cb) => cb.addEventListener('change', updateTags));
-    tagsContainer.addEventListener('click', removeTagViaButton);
+    if (tagsContainer) tagsContainer.addEventListener('click', removeTagViaButton);
 
     // ==========================================
     // SISTEMA DE VALIDACIONES
@@ -177,22 +183,29 @@ function initFormulario() {
         return true;
     };
 
-    // Escuchadores en tiempo real
-    nombreInput.addEventListener('blur', validateNombre);
-    nombreInput.addEventListener('input', () => {
-        if (nombreInput.parentElement.querySelector('.error-message')) validateNombre();
-    });
-    celularInput.addEventListener('blur', validateCelular);
-    celularInput.addEventListener('input', () => {
-        if (celularInput.parentElement.querySelector('.error-message')) validateCelular();
-    });
-    emailInput.addEventListener('blur', validateEmail);
-    emailInput.addEventListener('input', () => {
-        if (emailInput.parentElement.querySelector('.error-message')) validateEmail();
-    });
+    if (nombreInput) {
+        nombreInput.addEventListener('blur', validateNombre);
+        nombreInput.addEventListener('input', () => {
+            if (nombreInput.parentElement.querySelector('.error-message')) validateNombre();
+        });
+    }
+
+    if (celularInput) {
+        celularInput.addEventListener('blur', validateCelular);
+        celularInput.addEventListener('input', () => {
+            if (celularInput.parentElement.querySelector('.error-message')) validateCelular();
+        });
+    }
+
+    if (emailInput) {
+        emailInput.addEventListener('blur', validateEmail);
+        emailInput.addEventListener('input', () => {
+            if (emailInput.parentElement.querySelector('.error-message')) validateEmail();
+        });
+    }
 
     // ==========================================
-    // ENVÍO ASÍNCRONO Y INYECCIÓN DE PANTALLA DE ÉXITO
+    // ENVÍO ASÍNCRONO
     // ==========================================
     form.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -240,10 +253,8 @@ function initFormulario() {
         })
             .then((response) => {
                 if (response.ok) {
-                    // Removemos el evento click-away global de este ciclo para evitar fugas de memoria
                     document.removeEventListener('click', closeDropdownOnClickAway);
 
-                    // Mostramos pantalla de éxito
                     form.innerHTML = `
                     <div class="flex flex-col items-center justify-center text-center py-12 px-4 animate-fade-in bg-zinc-900/40 border border-zinc-800 rounded-2xl w-full">
                         <div class="w-16 h-16 bg-logo-fucsia/10 border border-logo-fucsia/30 rounded-full flex items-center justify-center mb-6 shadow-[0_0_20px_rgba(219,39,119,0.15)]">
@@ -273,54 +284,41 @@ function initFormulario() {
             });
     });
 
-    // ==========================================
-    // ESCUCHA DEL BOTÓN DE REINICIO (DELEGACIÓN)
-    // ==========================================
+    // Delegación para reiniciar formulario
     form.addEventListener('click', (e) => {
         if (e.target && e.target.id === 'reset-form-btn') {
             e.preventDefault();
-
-            // 1. Desmarcar TODOS los checkboxes físicamente en el DOM antes de borrar el HTML
-            // Esto destruye el estado residual en la memoria del navegador
-            checkboxes.forEach((cb) => {
-                cb.checked = false;
-            });
-
-            // 2. Restauramos la estructura limpia original al formulario
+            checkboxes.forEach((cb) => (cb.checked = false));
             form.innerHTML = estructuraOriginalForm;
-
-            // 3. Volvemos a ejecutar la función para enlazar los elementos nuevos
             initFormulario();
         }
     });
 }
 
+// ==========================================
+// NAVBAR RESPONSIVE & IDIOMAS
+// ==========================================
 document.addEventListener('DOMContentLoaded', () => {
-    // --- ELEMENTOS DEL NAVBAR RESPONSIVE ---
     const menuBtn = document.getElementById('menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
     const menuIcon = document.getElementById('menu-icon');
     const mobileLinks = document.querySelectorAll('.mobile-link');
 
-    // --- ELEMENTOS DEL BOTÓN IDIOMAS ---
     const btnIdiomaDesktop = document.getElementById('btn-idioma-desktop');
     const menuIdiomasDesktop = document.getElementById('menu-idiomas-desktop');
     const btnIdiomaMobile = document.getElementById('btn-idioma-mobile');
     const menuIdiomasMobile = document.getElementById('menu-idiomas-mobile');
     const flechaIdiomaMobile = document.getElementById('flecha-idioma-mobile');
 
-    // Lógica Apertura/Cierre Menú Hamburguesa
     if (menuBtn && mobileMenu && menuIcon) {
         menuBtn.addEventListener('click', () => {
             const isHidden = mobileMenu.classList.toggle('hidden');
 
-            // Si cerramos la hamburguesa, colapsamos el submenú de idiomas móvil por las dudas
             if (isHidden && menuIdiomasMobile && flechaIdiomaMobile) {
                 menuIdiomasMobile.classList.add('hidden');
                 flechaIdiomaMobile.classList.remove('rotate-180');
             }
 
-            // Cambia el icono de hamburguesa a una equis (X) dinámicamente
             if (isHidden) {
                 menuIcon.innerHTML =
                     '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>';
@@ -330,7 +328,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Cerrar menú móvil al clickear un enlace común
         mobileLinks.forEach((link) => {
             link.addEventListener('click', () => {
                 mobileMenu.classList.add('hidden');
@@ -340,7 +337,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Lógica Interactiva Idioma ESCRITORIO (Desktop)
     if (btnIdiomaDesktop && menuIdiomasDesktop) {
         btnIdiomaDesktop.addEventListener('click', (e) => {
             e.preventDefault();
@@ -349,14 +345,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Lógica Interactiva Idioma CELULAR (Mobile)
     if (btnIdiomaMobile && menuIdiomasMobile && flechaIdiomaMobile) {
         btnIdiomaMobile.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
             const isHidden = menuIdiomasMobile.classList.toggle('hidden');
 
-            // Si no está oculto, significa que está abierto -> rotamos la flecha
             if (!isHidden) {
                 flechaIdiomaMobile.classList.add('rotate-180');
             } else {
@@ -365,7 +359,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Cerrar menús flotantes si se hace clic en el documento vacío
     document.addEventListener('click', (e) => {
         if (menuIdiomasDesktop && !btnIdiomaDesktop.contains(e.target) && !menuIdiomasDesktop.contains(e.target)) {
             menuIdiomasDesktop.classList.add('hidden');
@@ -373,7 +366,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// --- FUNCIÓN DE COOKIES GOOGLE TRANSLATE (Mantenida intacta) ---
 function cambiarIdioma(codigo) {
     const dominio = window.location.hostname === 'localhost' ? '' : ';domain=.github.io';
 
@@ -389,9 +381,6 @@ function cambiarIdioma(codigo) {
 }
 
 // ==========================================
-// 2. LECTURA EN TIEMPO REAL (INSTAGRAM REEL)
-// ==========================================
-// ==========================================
 // LECTURA EN TIEMPO REAL (INSTAGRAM REEL)
 // ==========================================
 function suscribirInstagramReel() {
@@ -406,13 +395,11 @@ function suscribirInstagramReel() {
                     const imgCover =
                         document.getElementById('reel-cover-img') || (btnModal ? btnModal.querySelector('img') : null);
 
-                    // 1. Asignamos la URL limpia del Reel o el ID para el reproductor/modal
                     if (btnModal) {
                         if (data.reelId) btnModal.setAttribute('data-reel-id', data.reelId);
                         if (data.reelUrl) btnModal.setAttribute('data-reel-url', data.reelUrl);
                     }
 
-                    // 2. Asignamos la portada alojada en Firebase Storage
                     if (imgCover && data.coverUrl) {
                         imgCover.src = data.coverUrl;
                     }
@@ -425,7 +412,7 @@ function suscribirInstagramReel() {
 }
 
 // ==========================================
-// 3. CONTROL Y MANEJO DEL MODAL
+// CONTROL DEL MODAL DE INSTAGRAM
 // ==========================================
 document.addEventListener('DOMContentLoaded', function () {
     suscribirInstagramReel();
@@ -455,7 +442,6 @@ document.addEventListener('DOMContentLoaded', function () {
             modalContainer.classList.add('scale-100');
         }
 
-        // Inyección del blockquote dinámico de Instagram
         embedTarget.innerHTML = `
             <div id="modal-loader" class="absolute inset-0 bg-zinc-900/95 rounded-2xl flex flex-col items-center justify-center space-y-4 transition-opacity duration-300 z-20">
                 ${loader ? loader.innerHTML : '<span class="text-xs font-bold text-zinc-400">Cargando Reel...</span>'}
@@ -467,7 +453,6 @@ document.addEventListener('DOMContentLoaded', function () {
             </blockquote>
         `;
 
-        // Procesamiento del embed mediante el SDK de Instagram
         if (window.instgrm && window.instgrm.Embeds) {
             window.instgrm.Embeds.process();
         } else {
@@ -529,71 +514,9 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-//////todo---------------------------------------------------------------------------------
-
-// ==========================================
-// LECTURA Y ACTUALIZACIÓN DINÁMICA DE TARJETAS
-// ==========================================
-
-/**
- * Función que escucha los cambios en Firestore para las 9 tarjetas
- * y actualiza el HTML dinámicamente.
- */
-function inicializarTarjetasDinamicas() {
-    // Aseguramos que Firebase Firestore esté inicializado en la ventana
-    if (typeof db === 'undefined') {
-        console.error('Firestore no está inicializado. Asegurate de cargar Firebase SDK antes de script.js');
-        return;
-    }
-
-    // Escuchar la colección 'tarjetas' en tiempo real
-    db.collection('tarjetas').onSnapshot(
-        (snapshot) => {
-            snapshot.forEach((doc) => {
-                const idTarjeta = doc.id; // Ej: "tarjeta-1"
-                const data = doc.data();
-
-                // Buscar el contenedor de la tarjeta en el DOM por su ID
-                const contenedorTarjeta = document.getElementById(idTarjeta);
-
-                if (contenedorTarjeta) {
-                    // Actualizar <span> (Etiqueta/Categoría)
-                    const elemSpan = contenedorTarjeta.querySelector('span');
-                    if (elemSpan && data.span !== undefined) {
-                        elemSpan.textContent = data.span;
-                    }
-
-                    // Actualizar <h3> (Título principal)
-                    const elemH3 = contenedorTarjeta.querySelector('h3');
-                    if (elemH3 && data.h3 !== undefined) {
-                        elemH3.textContent = data.h3;
-                    }
-
-                    // Actualizar <p> (Descripción)
-                    const elemP = contenedorTarjeta.querySelector('p');
-                    if (elemP && data.p !== undefined) {
-                        elemP.textContent = data.p;
-                    }
-                }
-            });
-        },
-        (error) => {
-            console.error('Error al escuchar cambios en las tarjetas:', error);
-        },
-    );
-}
-
-// Ejecutar la función cuando el DOM esté completamente cargado
-document.addEventListener('DOMContentLoaded', () => {
-    inicializarTarjetasDinamicas();
-});
-
-//todo----------------------------------------------------------------------------------------------------
-
 // ==========================================
 // CONFIGURACIÓN E INICIALIZACIÓN FIREBASE
 // ==========================================
-
 const firebaseConfig = {
     apiKey: 'AIzaSyCTEKHrjvi-rZKuV7F6uF8144Oiz8kC-Xs',
     authDomain: 'epa-studio-web.firebaseapp.com',
@@ -609,20 +532,16 @@ if (!firebase.apps.length) {
 const db = firebase.firestore();
 
 // ==========================================
-// RENDERIZADO DINÁMICO DE TARJETAS
+// RENDERIZADO Y CARGA DINÁMICA DE TARJETAS
 // ==========================================
 
-/**
- * Crea el HTML de la tarjeta dinámicamente
- */
 function crearTarjetaHTML(idDoc, data) {
-    // Normalizar la URL para asegurar protocolo https://
-    let urlDestino = data.link ? data.link.trim() : '';
+    // Corregido: Ahora lee 'sitio_web' tal como se guarda en admin.html
+    let urlDestino = data.sitio_web ? data.sitio_web.trim() : '';
     if (urlDestino && !urlDestino.startsWith('http://') && !urlDestino.startsWith('https://')) {
         urlDestino = `https://${urlDestino}`;
     }
 
-    // Pie de la tarjeta: solo se incluye si el cliente guardó una URL
     const seccionLink = urlDestino
         ? `
         <div class="mt-5 pt-4 border-t border-zinc-800/50 flex items-center justify-between">
@@ -644,10 +563,10 @@ function crearTarjetaHTML(idDoc, data) {
         : '';
 
     return `
-        <div
-            id="${idDoc}"
-            class="w-[80%] sm:w-[60%] md:w-auto flex-shrink-0 snap-start group bg-zinc-950/60 border border-zinc-800/80 p-5 sm:p-6 rounded-xl hover:border-logo-fucsia/50 transition-all duration-300 relative overflow-hidden shadow-xl hover:shadow-logo-fucsia/5 cursor-pointer flex flex-col justify-between"
-        >
+    <div
+        id="${idDoc}"
+        class="w-full snap-start group bg-zinc-950/60 border border-zinc-800/80 p-5 sm:p-6 rounded-xl hover:border-logo-fucsia/50 transition-all duration-300 relative overflow-hidden shadow-xl hover:shadow-logo-fucsia/5 cursor-pointer flex flex-col justify-between"
+    >
             <div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-logo-fucsia to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
 
             <div>
@@ -667,9 +586,6 @@ function crearTarjetaHTML(idDoc, data) {
     `;
 }
 
-/**
- * Escucha cambios en tiempo real en Firestore
- */
 function cargarTarjetas() {
     const contenedor = document.getElementById('contenedor-tarjetas');
 
@@ -680,7 +596,6 @@ function cargarTarjetas() {
 
     db.collection('tarjetas').onSnapshot(
         (snapshot) => {
-            // Reemplaza la tarjeta de "Cargando..." por el contenido real
             contenedor.innerHTML = '';
 
             if (snapshot.empty) {
@@ -701,5 +616,4 @@ function cargarTarjetas() {
     );
 }
 
-// Iniciar la escucha cuando el documento esté completamente cargado
 document.addEventListener('DOMContentLoaded', cargarTarjetas);
