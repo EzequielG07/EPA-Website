@@ -1,11 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Al cargar la página, inicializamos el formulario por primera vez
     initFormulario();
 });
 
+// Listener global para cerrar el dropdown si se hace click afuera
+let closeDropdownHandler = null;
+
 function initFormulario() {
-    // 1. Referencias de los elementos del DOM
     const form = document.querySelector('form');
+    if (!form) return;
+
+    // Configuración de WhatsApp (Código país + código de área + número)
+    // Ejemplo Argentina: '5491112345678'
+    const TELEFONO_WSP = '5491161658521';
+
     const toggleServicesBtn = document.getElementById('toggle-services-btn');
     const servicesDropdown = document.getElementById('services-dropdown');
     const toggleIcon = document.getElementById('toggle-icon');
@@ -17,28 +24,31 @@ function initFormulario() {
     const celularInput = document.getElementById('celular');
     const emailInput = document.getElementById('email');
     const comentarioInput = document.getElementById('comentario');
+    const redsocialInput = document.getElementById('red-social');
 
-    if (!form) return;
-
-    // Respaldo de la estructura HTML interna del formulario para el reinicio
+    // Respaldo del HTML original
     const estructuraOriginalForm = form.innerHTML;
 
     // ==========================================
-    // LÓGICA DEL DROPDOWN Y RENDERS DE TAGS
+    // LÓGICA DEL DROPDOWN Y TAGS
     // ==========================================
     const toggleDropdown = (e) => {
         e.preventDefault();
         const isHidden = servicesDropdown.classList.contains('hidden');
         if (isHidden) {
             servicesDropdown.classList.remove('hidden');
-            toggleIcon.classList.add('rotate-180');
+            if (toggleIcon) toggleIcon.classList.add('rotate-180');
         } else {
             servicesDropdown.classList.add('hidden');
-            toggleIcon.classList.remove('rotate-180');
+            if (toggleIcon) toggleIcon.classList.remove('rotate-180');
         }
     };
 
-    const closeDropdownOnClickAway = (e) => {
+    if (closeDropdownHandler) {
+        document.removeEventListener('click', closeDropdownHandler);
+    }
+
+    closeDropdownHandler = (e) => {
         if (
             toggleServicesBtn &&
             servicesDropdown &&
@@ -49,6 +59,8 @@ function initFormulario() {
             if (toggleIcon) toggleIcon.classList.remove('rotate-180');
         }
     };
+
+    document.addEventListener('click', closeDropdownHandler);
 
     function updateTags() {
         const existingTags = tagsContainer.querySelectorAll('.dynamic-tag');
@@ -99,7 +111,6 @@ function initFormulario() {
     };
 
     if (toggleServicesBtn) toggleServicesBtn.addEventListener('click', toggleDropdown);
-    document.addEventListener('click', closeDropdownOnClickAway);
     checkboxes.forEach((cb) => cb.addEventListener('change', updateTags));
     if (tagsContainer) tagsContainer.addEventListener('click', removeTagViaButton);
 
@@ -177,7 +188,7 @@ function initFormulario() {
         if (!anyChecked) {
             tagsContainer.classList.remove('border-zinc-800', 'bg-zinc-900/20');
             tagsContainer.classList.add('border-rose-500/80', 'bg-rose-950/10');
-            toggleServicesBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            if (toggleServicesBtn) toggleServicesBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
             return false;
         }
         return true;
@@ -205,9 +216,9 @@ function initFormulario() {
     }
 
     // ==========================================
-    // ENVÍO ASÍNCRONO
+    // ENVÍO A WHATSAPP
     // ==========================================
-    form.addEventListener('submit', (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
 
         const isNombreValid = validateNombre();
@@ -217,82 +228,68 @@ function initFormulario() {
 
         if (!isNombreValid || !isCelularValid || !isEmailValid || !isServicesValid) return;
 
-        const submitBtn = form.querySelector('button[type="submit"]');
-        const originalBtnText = submitBtn.innerHTML;
-
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = `
-            <span class="flex items-center justify-center gap-2">
-                <svg class="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                Enviando solicitud...
-            </span>
-        `;
-
         const serviciosSeleccionados = [];
         checkboxes.forEach((cb) => {
-            if (cb.checked) serviciosSeleccionados.push(cb.getAttribute('data-label'));
+            if (cb.checked) serviciosSeleccionados.push(`• ${cb.getAttribute('data-label')}`);
         });
 
-        const formData = {
-            nombre: nombreInput.value.trim(),
-            celular: celularInput.value.trim(),
-            email: emailInput.value.trim(),
-            servicios: serviciosSeleccionados.join(', '),
-            comentario: comentarioInput ? comentarioInput.value.trim() : '',
-        };
+        const nombre = nombreInput.value.trim();
+        const celular = celularInput.value.trim();
+        const email = emailInput.value.trim();
+        const red = redsocialInput.value.trim();
+        const comentario = comentarioInput ? comentarioInput.value.trim() : '';
 
-        const ENDPOINT = 'https://formsubmit.co/ajax/ezequiel.guaymas07@gmail.com';
+        // Construcción del mensaje con formato WhatsApp (*negrita*, saltos de línea)
+        let mensaje = `*¡Hola! Nueva consulta desde la web*\n\n`;
+        mensaje += `*Nombre:* ${nombre}\n`;
+        mensaje += `*Celular:* ${celular}\n`;
+        mensaje += `*Email:* ${email}\n`;
+        mensaje += `*Red Social:* ${red}\n\n`;
+        mensaje += `*Servicios de interés:*\n${serviciosSeleccionados.join('\n')}\n`;
 
-        fetch(ENDPOINT, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-            body: JSON.stringify(formData),
-        })
-            .then((response) => {
-                if (response.ok) {
-                    document.removeEventListener('click', closeDropdownOnClickAway);
-
-                    form.innerHTML = `
-                    <div class="flex flex-col items-center justify-center text-center py-12 px-4 animate-fade-in bg-zinc-900/40 border border-zinc-800 rounded-2xl w-full">
-                        <div class="w-16 h-16 bg-logo-fucsia/10 border border-logo-fucsia/30 rounded-full flex items-center justify-center mb-6 shadow-[0_0_20px_rgba(219,39,119,0.15)]">
-                            <svg class="w-8 h-8 text-logo-fucsia" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-bold text-white mb-2">¡Solicitud Recibida!</h3>
-                        <p class="text-zinc-400 text-sm max-w-sm leading-relaxed mb-8">
-                            Hemos procesado tus datos correctamente. Nuestro equipo técnico analizará los servicios seleccionados y se contactará con vos a la brevedad.
-                        </p>
-                        <button type="button" id="reset-form-btn" class="w-full sm:w-auto px-6 py-3 text-sm font-semibold text-zinc-300 bg-zinc-800 border border-zinc-700 rounded-xl hover:bg-zinc-700 hover:text-white transition-all duration-200 focus:outline-none cursor-pointer">
-                            Realizar otra consulta
-                        </button>
-                    </div>
-                `;
-                    form.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                } else {
-                    throw new Error('Error en servidor');
-                }
-            })
-            .catch((error) => {
-                console.error(error);
-                alert('Hubo un problema al enviar el formulario.');
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = originalBtnText;
-            });
-    });
-
-    // Delegación para reiniciar formulario
-    form.addEventListener('click', (e) => {
-        if (e.target && e.target.id === 'reset-form-btn') {
-            e.preventDefault();
-            checkboxes.forEach((cb) => (cb.checked = false));
-            form.innerHTML = estructuraOriginalForm;
-            initFormulario();
+        if (comentario !== '') {
+            mensaje += `\n*Comentario:* ${comentario}`;
         }
-    });
+
+        // Generar enlace para WhatsApp
+        const whatsappUrl = `https://wa.me/${TELEFONO_WSP}?text=${encodeURIComponent(mensaje)}`;
+
+        // Abrir WhatsApp en una nueva pestaña
+        window.open(whatsappUrl, '_blank');
+
+        // Mostramos el mensaje de éxito en la web para que la UI responda adecuadamente
+        if (closeDropdownHandler) {
+            document.removeEventListener('click', closeDropdownHandler);
+        }
+
+        form.innerHTML = `
+            <div class="flex flex-col items-center justify-center text-center py-12 px-4 animate-fade-in bg-zinc-900/40 border border-zinc-800 rounded-2xl w-full">
+                <div class="w-16 h-16 bg-emerald-500/10 border border-emerald-500/30 rounded-full flex items-center justify-center mb-6 shadow-[0_0_20px_rgba(16,185,129,0.15)]">
+                    <svg class="w-8 h-8 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-2">¡Redirigiendo a WhatsApp!</h3>
+                <p class="text-zinc-400 text-sm max-w-sm leading-relaxed mb-8">
+                    Se ha abierto una nueva ventana con WhatsApp. Presioná "Enviar" en la app para enviarnos tu solicitud.
+                </p>
+                <button type="button" id="reset-form-btn" class="w-full sm:w-auto px-6 py-3 text-sm font-semibold text-zinc-300 bg-zinc-800 border border-zinc-700 rounded-xl hover:bg-zinc-700 hover:text-white transition-all duration-200 focus:outline-none cursor-pointer">
+                    Realizar otra consulta
+                </button>
+            </div>
+        `;
+        form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+        const resetBtn = document.getElementById('reset-form-btn');
+        if (resetBtn) {
+            resetBtn.addEventListener('click', () => {
+                form.innerHTML = estructuraOriginalForm;
+                initFormulario();
+            });
+        }
+    };
+
+    form.onsubmit = handleSubmit;
 }
 
 // ==========================================
@@ -381,41 +378,77 @@ function cambiarIdioma(codigo) {
 }
 
 // ==========================================
-// LECTURA EN TIEMPO REAL (INSTAGRAM REEL)
+// CONFIGURACIÓN DE LA API DE FACEBOOK / INSTAGRAM
 // ==========================================
-function suscribirInstagramReel() {
-    db.collection('config')
-        .doc('instagram')
-        .onSnapshot(
-            (doc) => {
-                if (doc.exists) {
-                    const data = doc.data();
-                    const btnModal =
-                        document.getElementById('open-instagram-modal') || document.querySelector('[data-reel-id]');
-                    const imgCover =
-                        document.getElementById('reel-cover-img') || (btnModal ? btnModal.querySelector('img') : null);
+// Aquí pegas el User Access Token generado desde el Graph API Explorer
+const INSTAGRAM_ACCESS_TOKEN =
+    'EAAOhQNDa06cBSPzNE5SBz19bcZBSkePnRyO7rQ4r4cdFzDyGyPpblVxyWhY1qPXLCMpYlPZAHjWzJg1Y2KfkGbSIfW02kX8SUPZCV8VNA1fitt57lG56u4dGs1njJ2OtJ06Jqxdwax6CZA06RgxvlTZCERWkx7q8PL0IocVLMQ6122XfG06ZA4lAsfJNKfnLwc';
 
-                    if (btnModal) {
-                        if (data.reelId) btnModal.setAttribute('data-reel-id', data.reelId);
-                        if (data.reelUrl) btnModal.setAttribute('data-reel-url', data.reelUrl);
-                    }
+/**
+ * Consulta Facebook Graph API para obtener la cuenta de Instagram vinculada y su último post/reel
+ */
+async function cargarUltimoPostInstagram() {
+    if (!INSTAGRAM_ACCESS_TOKEN) {
+        console.warn('Instagram API: Falta configurar un Access Token válido.');
+        return;
+    }
 
-                    if (imgCover && data.coverUrl) {
-                        imgCover.src = data.coverUrl;
-                    }
-                }
-            },
-            (error) => {
-                console.error('Error al obtener los datos de Instagram desde Firebase:', error);
-            },
-        );
+    // Consulta en cascada a graph.facebook.com:
+    // Pide la cuenta de Instagram Business asociada a la página y su último contenido multimedia
+    const url = `https://graph.facebook.com/v19.0/me/accounts?fields=instagram_business_account{media.limit(1){id,caption,media_type,media_url,permalink,thumbnail_url}}&access_token=${INSTAGRAM_ACCESS_TOKEN}`;
+
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+
+        if (data.error) {
+            console.error('Error de Facebook/Instagram API:', data.error.message);
+            return;
+        }
+
+        // Navegamos la respuesta de la API para extraer el último media de la cuenta de Instagram
+        const pageAccount = data.data && data.data.find((account) => account.instagram_business_account);
+        const instagramBusiness = pageAccount ? pageAccount.instagram_business_account : null;
+        const latestMedia =
+            instagramBusiness && instagramBusiness.media && instagramBusiness.media.data
+                ? instagramBusiness.media.data[0]
+                : null;
+
+        if (latestMedia) {
+            const btnModal =
+                document.getElementById('open-instagram-modal') || document.querySelector('[data-reel-id]');
+            const imgCover =
+                document.getElementById('reel-cover-img') || (btnModal ? btnModal.querySelector('img') : null);
+
+            // Determinar la portada correcta (thumbnail_url para vídeos/reels, media_url para imágenes)
+            const coverUrl = latestMedia.thumbnail_url || latestMedia.media_url;
+
+            // Asignar los atributos al botón
+            if (btnModal) {
+                if (latestMedia.id) btnModal.setAttribute('data-reel-id', latestMedia.id);
+                if (latestMedia.permalink) btnModal.setAttribute('data-reel-url', latestMedia.permalink);
+            }
+
+            // Actualizar la imagen en el DOM
+            if (imgCover && coverUrl) {
+                imgCover.src = coverUrl;
+            }
+        } else {
+            console.warn(
+                'No se encontró contenido publicado o la página no tiene una cuenta de Instagram Business vinculada.',
+            );
+        }
+    } catch (error) {
+        console.error('Error al conectar con la API de Facebook/Instagram:', error);
+    }
 }
 
 // ==========================================
 // CONTROL DEL MODAL DE INSTAGRAM
 // ==========================================
 document.addEventListener('DOMContentLoaded', function () {
-    suscribirInstagramReel();
+    // Carga inicial dinámica desde Meta API
+    cargarUltimoPostInstagram();
 
     const openBtn = document.getElementById('open-instagram-modal');
     const modal = document.getElementById('instagram-modal');
@@ -429,8 +462,12 @@ document.addEventListener('DOMContentLoaded', function () {
     let checkIframeInterval = null;
 
     function openModal() {
+        const reelUrl = openBtn.getAttribute('data-reel-url');
         const reelId = openBtn.getAttribute('data-reel-id');
-        if (!reelId) return;
+
+        // Preferimos el permalink completo si viene de la API, sino armamos la URL con el ID
+        const targetPermalink = reelUrl || (reelId ? `https://www.instagram.com/reel/${reelId}/` : null);
+        if (!targetPermalink) return;
 
         document.body.classList.add('overflow-hidden');
 
@@ -448,7 +485,7 @@ document.addEventListener('DOMContentLoaded', function () {
             </div>
             <blockquote class="instagram-media" 
                         data-instgrm-captioned 
-                        data-instgrm-permalink="https://www.instagram.com/reel/${reelId}/?utm_source=ig_embed&amp;utm_campaign=loading" 
+                        data-instgrm-permalink="${targetPermalink}?utm_source=ig_embed&amp;utm_campaign=loading" 
                         data-instgrm-version="14">
             </blockquote>
         `;

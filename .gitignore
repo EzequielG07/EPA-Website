@@ -1,0 +1,11 @@
+# Dependencias de Node (no se suben a Git)
+node_modules/
+
+# Archivos de registro / logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Configuraciones del editor
+.vscode/
+.DS_Store

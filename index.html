@@ -3,26 +3,96 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Estructura Base - Custom Palette</title>
-        <script src="https://cdn.tailwindcss.com"></script>
+
+        <!-- Metas SEO -->
+        <title>EPA - Soluciones Digitales para tu Negocio | Diseño y Marketing</title>
+        <meta
+            name="description"
+            content="Potencia tu negocio con EPA. Ofrecemos soluciones digitales, diseño web y marketing para empresas. Contáctanos y lleva tu marca al siguiente nivel."
+        />
+        <meta
+            name="keywords"
+            content="soluciones digitales, diseño web, marketing digital, estrategias digitales, branding, ecommerce"
+        />
+        <meta name="robots" content="index, follow" />
+        <meta name="author" content="Ezequiel Guaymas" />
+
+        <!-- Tailwind CSS (Configuración) -->
+        <!-- <script src="https://cdn.tailwindcss.com"></script>
         <script>
-            // Extendemos Tailwind con los colores exactos del logo
             tailwind.config = {
                 theme: {
                     extend: {
                         colors: {
                             logo: {
-                                fucsia: '#e600a0', // Rosa neón del frente
-                                cian: '#00d2ff', // Turquesa/Cian brillante de los bordes
-                                azul: '#2000b0', // Azul eléctrico de las sombras laterales
-                                dark: '#0d0d12', // Negro profundo optimizado para interfaces
+                                fucsia: '#e600a0',
+                                cian: '#00d2ff',
+                                azul: '#2000b0',
+                                dark: '#0d0d12',
                             },
                         },
                     },
                 },
             };
+        </script> -->
+
+        <!-- Verificación de Google Search Console -->
+        <meta name="google-site-verification" content="LeZ6NmXcBuLoOx4NcsAI3gyuYCqejH3um621VWNoNSw" />
+
+        <!-- URL Canónica -->
+        <link rel="canonical" href="https://www.studioepa.com/" />
+
+        <!-- Preload del Logo e Ícono -->
+        <link rel="preload" href="assets/img/logo_epa.png" as="image" />
+        <link rel="icon" type="image/x-icon" href="logo_epa.ico" />
+
+        <!-- Open Graph markup for Facebook / WhatsApp / LinkedIn -->
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.studioepa.com/" />
+        <meta property="og:title" content="EPA | Soluciones Digitales, Diseño Web y Marketing" />
+        <meta
+            property="og:description"
+            content="Potencia tu negocio con EPA. Ofrecemos soluciones digitales, diseño web y marketing para empresas. Contáctanos y lleva tu marca al siguiente nivel."
+        />
+        <meta property="og:image" content="https://www.studioepa.com/assets/img/logo_epa.png" />
+        <meta property="og:site_name" content="EPA Studio" />
+        <meta property="og:locale" content="es_AR" />
+
+        <!-- Twitter Card markup -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@epa" />
+        <meta name="twitter:creator" content="@epa" />
+        <meta name="twitter:title" content="EPA | Soluciones Digitales, Diseño Web y Marketing" />
+        <meta
+            name="twitter:description"
+            content="Potencia tu negocio con EPA. Ofrecemos soluciones digitales, diseño web y marketing para empresas. Contáctanos y lleva tu marca al siguiente nivel."
+        />
+        <meta name="twitter:image" content="https://www.studioepa.com/assets/img/logo_epa.png" />
+
+        <!-- Schema.org markup for Google -->
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "Organization",
+                "name": "EPA Studio",
+                "url": "https://www.studioepa.com",
+                "logo": "https://www.studioepa.com/assets/img/logo_epa.png",
+                "description": "EPA ofrece soluciones digitales, diseño web y estrategias de marketing para potenciar tu negocio.",
+                "address": {
+                    "@type": "PostalAddress",
+                    "addressCountry": "AR"
+                },
+                "sameAs": [
+                    "https://www.facebook.com/epa",
+                    "https://www.instagram.com/epa",
+                    "https://www.linkedin.com/epa",
+                    "https://www.youtube.com/epa"
+                ]
+            }
         </script>
-        <link rel="stylesheet" href="src/styles.css" />
+
+        <!-- <link rel="stylesheet" href="src/styles.css" /> -->
+        <link rel="stylesheet" href="dist/output.css" />
     </head>
 
     <body class="bg-logo-dark text-slate-300 flex flex-col min-h-screen font-sans">
