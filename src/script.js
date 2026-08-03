@@ -378,14 +378,14 @@ function cambiarIdioma(codigo) {
 }
 
 // ==========================================
-// CONFIGURACIÓN DE LA API DE FACEBOOK / INSTAGRAM
+// CONFIGURACIÓN DE LA API DE INSTAGRAM
 // ==========================================
-// Aquí pegas el User Access Token generado desde el Graph API Explorer
+// Pegá aquí el token generado desde Instagram Basic Display (User Token Generator)
 const INSTAGRAM_ACCESS_TOKEN =
-    'EAAOhQNDa06cBSPzNE5SBz19bcZBSkePnRyO7rQ4r4cdFzDyGyPpblVxyWhY1qPXLCMpYlPZAHjWzJg1Y2KfkGbSIfW02kX8SUPZCV8VNA1fitt57lG56u4dGs1njJ2OtJ06Jqxdwax6CZA06RgxvlTZCERWkx7q8PL0IocVLMQ6122XfG06ZA4lAsfJNKfnLwc';
+    'IGAAPBheOYEJpBZAFpVUWh1MHZAFOGwzRlJrNGFTeVV5OWhRdklTV09IM3NCN0xTb2lDeHo1ZA2lqSFUzRXNIdGZAZAamdyb2J0Q0ZA0eGdwSld1RHpyQWsyeDhGYnczV21pQXBhaUNjbTZAiNW16eElWOFUtblNvaW02MkJTa0xSNWd2ZAwZDZD';
 
 /**
- * Consulta Facebook Graph API para obtener la cuenta de Instagram vinculada y su último post/reel
+ * Consulta Instagram Graph API para obtener el último post/reel del cliente
  */
 async function cargarUltimoPostInstagram() {
     if (!INSTAGRAM_ACCESS_TOKEN) {
@@ -393,26 +393,20 @@ async function cargarUltimoPostInstagram() {
         return;
     }
 
-    // Consulta en cascada a graph.facebook.com:
-    // Pide la cuenta de Instagram Business asociada a la página y su último contenido multimedia
-    const url = `https://graph.facebook.com/v19.0/me/accounts?fields=instagram_business_account{media.limit(1){id,caption,media_type,media_url,permalink,thumbnail_url}}&access_token=${INSTAGRAM_ACCESS_TOKEN}`;
+    // Consulta directa a la API de Instagram Basic Display pidiendo solo la última publicación
+    const url = `https://graph.instagram.com/me/media?fields=id,caption,media_type,media_url,permalink,thumbnail_url,timestamp&limit=1&access_token=${INSTAGRAM_ACCESS_TOKEN}`;
 
     try {
         const response = await fetch(url);
         const data = await response.json();
 
         if (data.error) {
-            console.error('Error de Facebook/Instagram API:', data.error.message);
+            console.error('Error de Instagram API:', data.error.message);
             return;
         }
 
-        // Navegamos la respuesta de la API para extraer el último media de la cuenta de Instagram
-        const pageAccount = data.data && data.data.find((account) => account.instagram_business_account);
-        const instagramBusiness = pageAccount ? pageAccount.instagram_business_account : null;
-        const latestMedia =
-            instagramBusiness && instagramBusiness.media && instagramBusiness.media.data
-                ? instagramBusiness.media.data[0]
-                : null;
+        // Extraemos la última publicación devuelta por la API
+        const latestMedia = data.data && data.data.length > 0 ? data.data[0] : null;
 
         if (latestMedia) {
             const btnModal =
@@ -434,12 +428,10 @@ async function cargarUltimoPostInstagram() {
                 imgCover.src = coverUrl;
             }
         } else {
-            console.warn(
-                'No se encontró contenido publicado o la página no tiene una cuenta de Instagram Business vinculada.',
-            );
+            console.warn('No se encontró contenido publicado en la cuenta de Instagram.');
         }
     } catch (error) {
-        console.error('Error al conectar con la API de Facebook/Instagram:', error);
+        console.error('Error al conectar con la API de Instagram:', error);
     }
 }
 
