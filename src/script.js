@@ -11,7 +11,7 @@ function initFormulario() {
 
     // Configuración de WhatsApp (Código país + código de área + número)
     // Ejemplo Argentina: '5491112345678'
-    const TELEFONO_WSP = '5491161658521';
+    const TELEFONO_WSP = '5491151779388';
 
     const toggleServicesBtn = document.getElementById('toggle-services-btn');
     const servicesDropdown = document.getElementById('services-dropdown');
