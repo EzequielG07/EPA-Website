@@ -363,20 +363,40 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+// function cambiarIdioma(codigo) {
+//     const dominio = window.location.hostname === 'localhost' ? '' : ';domain=.github.io';
+
+//     if (codigo === 'es') {
+//         document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/' + dominio;
+//         document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
+//     } else {
+//         document.cookie = 'googtrans=/es/' + codigo + '; path=/' + dominio;
+//         document.cookie = 'googtrans=/es/' + codigo + '; path=/';
+//     }
+
+//     location.reload();
+// }
+
 function cambiarIdioma(codigo) {
-    const dominio = window.location.hostname === 'localhost' ? '' : ';domain=.github.io';
+    // 1. Obtener el dominio actual dinámicamente
+    const hostname = window.location.hostname;
+
+    // Si no es localhost, preparamos la propiedad domain con un punto adelante para cubrir subdominios
+    const domainAttribute = hostname === 'localhost' ? '' : `; domain=.${hostname.replace(/^www\./, '')}`;
 
     if (codigo === 'es') {
-        document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/' + dominio;
-        document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
+        // 2. Para volver a Español: Borrar la cookie en la raíz y en el dominio específico
+        document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
+        document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/${domainAttribute}`;
     } else {
-        document.cookie = 'googtrans=/es/' + codigo + '; path=/' + dominio;
-        document.cookie = 'googtrans=/es/' + codigo + '; path=/';
+        // 3. Para cambiar a otro idioma (ej: 'en'): Guardar la cookie correctamente en el dominio actual
+        document.cookie = `googtrans=/es/${codigo}; path=/`;
+        document.cookie = `googtrans=/es/${codigo}; path=/${domainAttribute}`;
     }
 
+    // 4. Recargar la página para aplicar los cambios
     location.reload();
 }
-
 // ==========================================
 // CONFIGURACIÓN DE LA API DE INSTAGRAM
 // ==========================================
